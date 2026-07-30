@@ -1,0 +1,98 @@
+name: Deploy production
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  id-token: write
+
+concurrency:
+  group: zemaverse-production
+  cancel-in-progress: false
+
+env:
+  AWS_REGION: us-west-2
+  AWS_ACCOUNT_ID: "590183935654"
+  AWS_DEPLOY_ROLE_ARN: arn:aws:iam::590183935654:role/zemaverse-github-actions-deploy
+  S3_BUCKET: zemaverse-site-20260730191927710700000001
+  CLOUDFRONT_DISTRIBUTION_ID: E3QDJUR5ZFJ1IT
+  LAMBDA_FUNCTION_NAME: zemaverse-api
+
+jobs:
+  deploy:
+    name: Build and deploy
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v6.0.2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v6.4.0
+        with:
+          node-version: "22"
+          cache: npm
+          cache-dependency-path: |
+            client/package-lock.json
+            server/package-lock.json
+
+      - name: Install frontend dependencies
+        run: npm ci --prefix client
+
+      - name: Install Lambda dependencies
+        run: npm ci --prefix server --omit=dev
+
+      - name: Validate and build
+        run: |
+          npm run build
+          node --check server/server.js
+          node --check server/controllers/user-controller.js
+          node --check server/config/mongoose.config.js
+
+      - name: Package Lambda
+        working-directory: server
+        run: zip -qr ../zemaverse-api.zip . -x ".env" ".env.*" "*.log" "node_modules/.cache/*"
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v6.1.2
+        with:
+          role-to-assume: ${{ env.AWS_DEPLOY_ROLE_ARN }}
+          aws-region: ${{ env.AWS_REGION }}
+          allowed-account-ids: ${{ env.AWS_ACCOUNT_ID }}
+          mask-aws-account-id: true
+          role-session-name: zemaverse-production-${{ github.run_id }}
+
+      - name: Deploy Lambda API
+        run: |
+          aws lambda update-function-code \
+            --function-name "$LAMBDA_FUNCTION_NAME" \
+            --zip-file fileb://zemaverse-api.zip
+          aws lambda wait function-updated-v2 \
+            --function-name "$LAMBDA_FUNCTION_NAME"
+
+      - name: Verify API before frontend release
+        run: curl --fail --retry 5 --retry-delay 3 https://zemaverse.com/api/health
+
+      - name: Deploy frontend
+        run: aws s3 sync client/dist "s3://$S3_BUCKET" --delete
+
+      - name: Refresh CloudFront
+        run: |
+          INVALIDATION_ID=$(aws cloudfront create-invalidation \
+            --distribution-id "$CLOUDFRONT_DISTRIBUTION_ID" \
+            --paths "/*" \
+            --query "Invalidation.Id" \
+            --output text)
+          aws cloudfront wait invalidation-completed \
+            --distribution-id "$CLOUDFRONT_DISTRIBUTION_ID" \
+            --id "$INVALIDATION_ID"
+
+      - name: Verify production
+        run: |
+          curl --fail --retry 5 --retry-delay 3 https://zemaverse.com/
+          curl --fail --retry 5 --retry-delay 3 https://zemaverse.com/api/health

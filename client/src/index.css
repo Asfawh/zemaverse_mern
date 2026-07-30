@@ -1,0 +1,923 @@
+:root {
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  color: #2b2022;
+  background: #f8f4ec;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  --wine: #541c2b;
+  --wine-dark: #2d0d17;
+  --wine-soft: #7a3043;
+  --gold: #d2a84a;
+  --gold-light: #f3dfaa;
+  --cream: #f8f4ec;
+  --paper: #fffdf8;
+  --ink: #2b2022;
+  --muted: #786a6c;
+  --border: #e5dcd0;
+}
+
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at 8% 8%, rgba(210, 168, 74, 0.12), transparent 26rem),
+    var(--cream);
+  color: var(--ink);
+}
+
+button, input, select, textarea { font: inherit; }
+a { color: var(--wine-soft); }
+a:hover { color: var(--wine); }
+
+#root, .app-shell { min-height: 100vh; }
+.app-shell { display: flex; flex-direction: column; }
+.site-main { flex: 1; padding: 2.5rem 0 4.5rem; }
+
+.site-navbar {
+  min-height: 78px;
+  background: linear-gradient(110deg, var(--wine-dark), var(--wine) 72%, #6a2638);
+  border-bottom: 1px solid rgba(243, 223, 170, 0.24);
+  box-shadow: 0 8px 30px rgba(45, 13, 23, 0.2);
+}
+
+.brand-lockup { display: flex; align-items: center; gap: 0.75rem; margin-right: 2.25rem; }
+.brand-lockup > span:last-child { display: grid; line-height: 1.05; }
+.brand-lockup strong { font-family: Georgia, "Times New Roman", serif; font-size: 1.25rem; letter-spacing: 0.02em; }
+.brand-lockup small { margin-top: 0.35rem; color: var(--gold-light); font-size: 0.7rem; letter-spacing: 0.08em; text-transform: uppercase; }
+.brand-mark {
+  display: grid;
+  width: 52px;
+  height: 52px;
+  place-items: center;
+  border: 1px solid rgba(243, 223, 170, 0.52);
+  border-radius: 16px;
+  background:
+    radial-gradient(circle at 34% 25%, rgba(243, 223, 170, 0.2), transparent 46%),
+    rgba(255, 255, 255, 0.06);
+  color: var(--gold-light);
+  box-shadow: inset 0 0 0 3px rgba(84, 28, 43, 0.32);
+}
+.brand-mark svg { width: 44px; height: 44px; overflow: visible; }
+.brand-mark path {
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.logo-cross path { stroke-width: 1.8; }
+.logo-cross path:nth-child(-n+4) { fill: rgba(210, 168, 74, 0.2); }
+.logo-drum path:first-child {
+  fill: rgba(122, 48, 67, 0.88);
+  stroke: var(--gold-light);
+  stroke-width: 1.8;
+}
+.logo-drum path:not(:first-child) { stroke: #f6e8c1; stroke-width: 1.05; opacity: 0.9; }
+.logo-sound { stroke-width: 1.45; opacity: 0.7; }
+
+.site-nav-links { gap: 0.4rem; }
+.site-nav-links .nav-link { color: rgba(255,255,255,0.78); font-size: 0.92rem; font-weight: 650; }
+.site-nav-links .nav-link:hover, .site-nav-links .nav-link.active { color: #fff; }
+
+.nav-search { display: flex; width: min(100%, 340px); }
+.nav-search-input {
+  min-width: 0;
+  border: 1px solid rgba(255,255,255,0.28);
+  border-right: 0;
+  border-radius: 999px 0 0 999px;
+  background: rgba(255,255,255,0.1);
+  color: #fff;
+  padding-left: 1rem;
+}
+.nav-search-input::placeholder { color: rgba(255,255,255,0.62); }
+.nav-search-input:focus { background: rgba(255,255,255,0.16); color: #fff; border-color: var(--gold-light); box-shadow: none; }
+.nav-search-button {
+  display: grid;
+  place-items: center;
+  width: 46px;
+  border: 0;
+  border-radius: 0 999px 999px 0;
+  background: var(--gold);
+  color: var(--wine-dark);
+}
+.nav-search-button:hover { background: #e2bb61; }
+
+.account-strip { background: #3b111e; color: rgba(255,255,255,0.72); border-bottom: 1px solid rgba(255,255,255,0.08); }
+.account-strip-inner { min-height: 46px; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+.account-welcome { font-size: 0.82rem; letter-spacing: 0.015em; }
+.account-menu .btn { border-color: rgba(255,255,255,0.42); border-radius: 999px; font-weight: 650; }
+
+.hero-section {
+  position: relative;
+  overflow: hidden;
+  padding: clamp(2.5rem, 6vw, 5.5rem);
+  min-height: clamp(420px, 54vw, 610px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border: 1px solid #d9cdbd;
+  border-radius: 28px;
+  background:
+    linear-gradient(90deg, rgba(255,253,248,0.99) 0%, rgba(255,253,248,0.94) 34%, rgba(255,253,248,0.28) 66%, rgba(45,13,23,0.08) 100%),
+    url('/assets/ethiopian-zemaverse-hero-female-v3.png') center right / cover no-repeat;
+  box-shadow: 0 24px 60px rgba(77, 45, 49, 0.1);
+}
+.hero-section > * { position: relative; z-index: 1; }
+.eyebrow { display: block; margin-bottom: 0.8rem; color: var(--wine-soft); font-size: 0.72rem; font-weight: 800; letter-spacing: 0.15em; text-transform: uppercase; }
+.hero-section h1 { max-width: 720px; margin: 0; color: var(--wine-dark); font-family: Georgia, "Times New Roman", serif; font-size: clamp(2.5rem, 6vw, 5rem); line-height: 0.98; letter-spacing: -0.035em; }
+.hero-section .hero-title { width: min(100%, 650px); }
+.hero-amharic-title {
+  position: relative;
+  display: block;
+  padding: 0.15em 0.08em 0.22em;
+  color: var(--wine-dark);
+  font-family: "Noto Serif Ethiopic", "Abyssinica SIL", Georgia, serif;
+  font-size: clamp(2.75rem, 5.4vw, 4.3rem);
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: 0.015em;
+  text-shadow: 0 3px 0 rgba(210, 168, 74, 0.18), 0 12px 28px rgba(84, 28, 43, 0.12);
+}
+.hero-amharic-title::before,
+.hero-amharic-title::after {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, transparent, var(--gold) 14%, var(--wine) 50%, var(--gold) 86%, transparent);
+  content: "";
+}
+.hero-amharic-title::before { top: -0.08em; }
+.hero-amharic-title::after { bottom: 0; }
+.hero-phonetic {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.65rem;
+  margin-top: 0.62rem;
+  color: var(--wine-soft);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(0.78rem, 1.3vw, 1rem);
+  font-style: italic;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+.hero-phonetic span {
+  width: 28px;
+  height: 1px;
+  background: var(--gold);
+}
+.hero-section .hero-description { max-width: 630px; margin: 1.4rem 0 0; color: var(--muted); font-size: clamp(0.96rem, 2vw, 1.1rem); line-height: 1.65; }
+.hero-amharic {
+  display: block;
+  margin-top: 0.65rem;
+  color: var(--wine-dark);
+  font-family: "Noto Serif Ethiopic", "Abyssinica SIL", Georgia, serif;
+  font-size: 0.96em;
+  font-weight: 600;
+}
+.hero-phonetic-description {
+  display: block;
+  margin-top: 0.35rem;
+  color: var(--wine-soft);
+  font-size: 0.82em;
+  font-style: italic;
+}
+.hero-section .hero-account-note { max-width: 610px; margin: 0.8rem 0 0; color: var(--muted); font-size: 0.86rem; line-height: 1.5; }
+.hero-stats { display: flex; flex-wrap: wrap; gap: 1rem 2.25rem; margin-top: 2rem; color: var(--muted); font-size: 0.86rem; }
+.hero-stats strong { margin-right: 0.25rem; color: var(--wine); font-size: 1.05rem; }
+
+.library-section { padding-top: 4rem; }
+.section-heading { display: flex; align-items: end; justify-content: space-between; gap: 1rem; margin-bottom: 1.5rem; }
+.section-heading-copy { display: flex; align-items: center; min-width: 0; gap: clamp(0.75rem, 2vw, 1.2rem); }
+.section-heading-cross {
+  width: clamp(58px, 6.2vw, 82px);
+  height: clamp(78px, 8.3vw, 110px);
+  flex: 0 0 auto;
+  object-fit: contain;
+  filter:
+    sepia(0.12)
+    saturate(1.2)
+    contrast(1.08)
+    drop-shadow(0 7px 12px rgba(84, 28, 43, 0.18));
+}
+.section-heading .eyebrow { margin-bottom: 0.4rem; }
+.section-heading h2 { margin: 0; color: var(--wine-dark); font-family: Georgia, "Times New Roman", serif; font-size: clamp(2rem, 4vw, 3.15rem); }
+.results-label { padding: 0.45rem 0.85rem; border-radius: 999px; background: #eadfce; color: var(--wine); font-size: 0.8rem; font-weight: 700; }
+
+.library-search {
+  display: flex;
+  align-items: center;
+  max-width: 860px;
+  margin-bottom: 0.75rem;
+  padding: 0.4rem;
+  border: 1px solid #d9ccba;
+  border-radius: 18px;
+  background: var(--paper);
+  box-shadow: 0 12px 32px rgba(77, 45, 49, 0.08);
+}
+.library-search:focus-within {
+  border-color: var(--wine-soft);
+  box-shadow: 0 0 0 0.22rem rgba(84, 28, 43, 0.1), 0 12px 32px rgba(77, 45, 49, 0.08);
+}
+.library-search-icon {
+  display: grid;
+  width: 44px;
+  flex: 0 0 44px;
+  place-items: center;
+  color: var(--wine-soft);
+  font-size: 1.55rem;
+  line-height: 1;
+}
+.library-search input {
+  min-width: 0;
+  flex: 1;
+  padding: 0.72rem 0.35rem;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: var(--ink);
+}
+.library-search input::placeholder { color: #9a8d8f; }
+.library-search-clear,
+.library-search-submit {
+  min-height: 42px;
+  padding: 0.55rem 1rem;
+  border-radius: 12px;
+  font-size: 0.84rem;
+  font-weight: 800;
+}
+.library-search-clear {
+  border: 0;
+  background: transparent;
+  color: var(--wine-soft);
+}
+.library-search-clear:hover { background: #f3eadf; color: var(--wine-dark); }
+.library-search-submit {
+  border: 1px solid var(--wine);
+  background: var(--wine);
+  color: #fff;
+}
+.library-search-submit:hover { border-color: var(--wine-dark); background: var(--wine-dark); }
+.search-summary { margin: 0 0 1.35rem 0.35rem; color: var(--muted); font-size: 0.86rem; }
+.search-summary strong { color: var(--wine); }
+
+.song-card {
+  position: relative;
+  overflow: hidden;
+  min-height: 390px;
+  padding: 0;
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  background: var(--paper);
+  box-shadow: 0 12px 30px rgba(77, 45, 49, 0.07);
+  transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
+}
+.song-card:hover { transform: translateY(-5px); border-color: #d2ba8b; box-shadow: 0 22px 45px rgba(77, 45, 49, 0.13); }
+.song-card-accent { height: 6px; background: linear-gradient(90deg, var(--wine), var(--gold), var(--wine)); }
+.song-card .card-body { display: flex; flex: 1; flex-direction: column; padding: 1.55rem 1.5rem 1rem; }
+.song-card-topline { display: flex; align-items: center; justify-content: space-between; gap: 0.75rem; margin-bottom: 1.5rem; }
+.genre-pill { padding: 0.36rem 0.72rem; border-radius: 999px; background: #f1e5d3; color: var(--wine); font-size: 0.72rem; font-weight: 800; letter-spacing: 0.025em; }
+.zemaverse-number { color: var(--muted); font-size: 0.75rem; }
+.song-card .card-title { margin-bottom: 0.65rem; color: var(--wine-dark); font-family: Georgia, "Times New Roman", serif; font-size: 1.55rem; line-height: 1.2; }
+.song-artist { color: var(--wine-soft); font-weight: 700; }
+.song-file { color: var(--muted); font-size: 0.82rem; }
+.song-preview {
+  display: grid;
+  overflow: hidden;
+  max-height: 6.1rem;
+  margin-top: 0.85rem;
+  color: var(--muted);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 0.88rem;
+  font-style: italic;
+  line-height: 1.45;
+}
+.song-preview span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.song-preview .song-preview-more {
+  color: var(--gold);
+  font-family: inherit;
+  font-style: normal;
+  font-weight: 800;
+}
+.reaction-row {
+  display: flex;
+  width: 100%;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.55rem;
+  margin-top: auto;
+  padding-top: 1.15rem;
+  border-top: 1px solid #eee5d9;
+}
+.reaction-button {
+  display: inline-flex;
+  min-height: 38px;
+  align-items: center;
+  gap: 0.38rem;
+  padding: 0.42rem 0.68rem;
+  border: 1px solid #ddcfbe;
+  border-radius: 999px;
+  background: #fbf5ec;
+  color: var(--wine-soft);
+  font-size: 0.76rem;
+  font-weight: 800;
+  transition: transform 150ms ease, border-color 150ms ease, background 150ms ease;
+}
+.reaction-button:not(:disabled):hover {
+  transform: translateY(-1px);
+  border-color: var(--gold);
+  background: #f7ecd9;
+}
+.reaction-button strong {
+  display: grid;
+  min-width: 1.35rem;
+  height: 1.35rem;
+  place-items: center;
+  border-radius: 999px;
+  background: rgba(84, 28, 43, 0.08);
+  color: var(--wine);
+  font-size: 0.7rem;
+}
+.reaction-button.is-active {
+  border-color: var(--wine);
+  box-shadow: 0 6px 16px rgba(84, 28, 43, 0.13);
+}
+.reaction-button.is-like {
+  background: #f2dfaa;
+  color: var(--wine-dark);
+}
+.reaction-button.is-love {
+  background: var(--wine);
+  color: #fff;
+}
+.reaction-button.is-love strong {
+  background: rgba(255,255,255,0.16);
+  color: #fff;
+}
+.reaction-button:disabled { cursor: not-allowed; opacity: 0.72; }
+.reaction-signin-note {
+  display: block;
+  width: 100%;
+  margin-top: 0.55rem;
+  color: #97888a;
+  font-size: 0.7rem;
+  text-align: center;
+}
+.song-card .card-footer { padding: 0 1.5rem 1.4rem; border: 0; background: transparent; }
+.song-link { display: inline-flex; gap: 0.45rem; align-items: center; color: var(--wine); font-size: 0.88rem; font-weight: 800; text-decoration: none; }
+.song-link:hover { gap: 0.7rem; color: var(--wine-soft); }
+
+.favorites-page { display: grid; gap: 1.5rem; }
+.favorites-hero {
+  position: relative;
+  overflow: hidden;
+  padding: clamp(2rem, 5vw, 4rem);
+  border-radius: 26px;
+  background:
+    radial-gradient(circle at 88% 18%, rgba(210, 168, 74, 0.25), transparent 18rem),
+    linear-gradient(120deg, var(--wine-dark), var(--wine));
+  color: #fff;
+  box-shadow: 0 20px 50px rgba(45, 13, 23, 0.16);
+}
+.favorites-hero .eyebrow { color: var(--gold-light); }
+.favorites-hero h1 {
+  margin: 0;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(2.35rem, 6vw, 4.5rem);
+  letter-spacing: -0.035em;
+}
+.favorites-hero p {
+  max-width: 650px;
+  margin: 0.9rem 0 0;
+  color: rgba(255,255,255,0.75);
+  line-height: 1.65;
+}
+.favorites-count {
+  display: inline-flex;
+  margin-top: 1.35rem;
+  padding: 0.48rem 0.8rem;
+  border: 1px solid rgba(243, 223, 170, 0.35);
+  border-radius: 999px;
+  background: rgba(255,255,255,0.08);
+  color: var(--gold-light);
+  font-size: 0.78rem;
+  font-weight: 800;
+}
+.favorites-empty {
+  display: grid;
+  min-height: 230px;
+  place-content: center;
+  gap: 0.6rem;
+  border: 1px dashed #cebfae;
+  border-radius: 20px;
+  background: rgba(255,253,248,0.72);
+  color: var(--muted);
+  text-align: center;
+}
+.favorites-empty strong {
+  color: var(--wine);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 1.35rem;
+}
+.favorites-empty a { color: var(--wine); font-size: 0.84rem; font-weight: 800; }
+
+.lyrics-page { width: min(100%, 900px); margin: 0 auto; }
+.lyrics-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  margin-bottom: 1.25rem;
+  color: var(--wine);
+  font-size: 0.84rem;
+  font-weight: 800;
+  text-decoration: none;
+}
+.lyrics-back:hover { gap: 0.7rem; color: var(--wine-soft); }
+.lyrics-header {
+  margin-bottom: 1.5rem;
+  padding: clamp(1.8rem, 5vw, 3.5rem);
+  border-radius: 24px;
+  background:
+    radial-gradient(circle at 90% 12%, rgba(210, 168, 74, 0.23), transparent 16rem),
+    linear-gradient(120deg, var(--wine-dark), var(--wine));
+  color: #fff;
+  text-align: center;
+  box-shadow: 0 18px 42px rgba(45, 13, 23, 0.16);
+}
+.lyrics-header .eyebrow { color: var(--gold-light); }
+.lyrics-header h1 {
+  margin: 0;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(2.25rem, 7vw, 4.7rem);
+  line-height: 1.05;
+  letter-spacing: -0.035em;
+}
+.lyrics-meta {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.55rem;
+  margin-top: 1.25rem;
+}
+.lyrics-meta span {
+  padding: 0.4rem 0.7rem;
+  border: 1px solid rgba(243, 223, 170, 0.24);
+  border-radius: 999px;
+  background: rgba(255,255,255,0.08);
+  color: rgba(255,255,255,0.78);
+  font-size: 0.74rem;
+  font-weight: 700;
+}
+.lyrics-sheet {
+  overflow: hidden;
+  border: 1px solid #d9ccba;
+  border-radius: 22px;
+  background:
+    linear-gradient(rgba(255,253,248,0.96), rgba(255,253,248,0.96)),
+    repeating-linear-gradient(0deg, transparent, transparent 31px, rgba(84,28,43,0.04) 32px);
+  box-shadow: 0 22px 55px rgba(77, 45, 49, 0.1);
+}
+.lyrics-sheet-heading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  padding: 1.2rem;
+  border-bottom: 1px solid var(--border);
+  background: #f5eee4;
+  color: var(--wine);
+}
+.lyrics-sheet-heading h2 {
+  margin: 0;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 1.35rem;
+}
+.lyrics-ornament { color: var(--gold); font-size: 1.05rem; }
+.lyrics-body {
+  width: min(100%, 680px);
+  min-height: 260px;
+  margin: 0 auto;
+  padding: clamp(2rem, 7vw, 4.5rem);
+  color: var(--ink);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(1.04rem, 2.3vw, 1.23rem);
+  line-height: 1.85;
+  text-align: center;
+}
+.lyrics-line { min-height: 1.85em; overflow-wrap: anywhere; }
+.lyrics-label {
+  margin: 1.25rem 0 0.35rem;
+  color: var(--wine);
+  font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+  font-size: 0.7em;
+  font-style: normal;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+.lyrics-stanza-break { height: 1.5rem; }
+.lyrics-empty { color: var(--muted); font-style: italic; }
+.lyrics-sheet-footer {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1rem 1.4rem;
+  border-top: 1px solid var(--border);
+  background: #f8f1e7;
+  color: var(--muted);
+  font-size: 0.76rem;
+}
+.lyrics-sheet-footer a { color: var(--wine); font-weight: 800; text-decoration: none; }
+.lyrics-status {
+  display: grid;
+  min-height: 260px;
+  place-content: center;
+  gap: 0.75rem;
+  color: var(--muted);
+  text-align: center;
+}
+.lyrics-status strong { color: var(--wine); }
+
+.workspace-hero {
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 1.5rem;
+  padding: clamp(2rem, 5vw, 4rem);
+  border: 1px solid rgba(243, 223, 170, 0.18);
+  border-radius: 26px;
+  background:
+    radial-gradient(circle at 88% 20%, rgba(210, 168, 74, 0.22), transparent 18rem),
+    linear-gradient(120deg, var(--wine-dark), var(--wine) 72%, #6a2638);
+  color: #fff;
+  box-shadow: 0 20px 50px rgba(45, 13, 23, 0.16);
+}
+.workspace-hero::after {
+  position: absolute;
+  right: -3rem;
+  bottom: -6rem;
+  width: 18rem;
+  height: 18rem;
+  border: 1px solid rgba(243, 223, 170, 0.18);
+  border-radius: 50%;
+  content: "";
+}
+.workspace-hero .eyebrow { color: var(--gold-light); }
+.workspace-hero h1 {
+  position: relative;
+  z-index: 1;
+  margin: 0;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(2.3rem, 5vw, 4.25rem);
+  letter-spacing: -0.03em;
+}
+.workspace-hero p {
+  position: relative;
+  z-index: 1;
+  max-width: 650px;
+  margin: 1rem 0 0;
+  color: rgba(255,255,255,0.72);
+  line-height: 1.7;
+}
+.song-workspace {
+  display: grid;
+  grid-template-columns: minmax(320px, 0.9fr) minmax(470px, 1.35fr);
+  gap: 1.5rem;
+  align-items: start;
+}
+.song-workspace-form,
+.song-workspace-list { min-width: 0; }
+
+.editor-card,
+.manager-card {
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  background: var(--paper);
+  box-shadow: 0 15px 38px rgba(77, 45, 49, 0.08);
+}
+.editor-card-header,
+.manager-card-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  padding: 1.4rem 1.5rem;
+  border-bottom: 1px solid var(--border);
+  background: linear-gradient(130deg, #fbf5ea, #fffdf8);
+}
+.editor-card-header h2,
+.manager-card-header h2 {
+  margin: 0 0 0.22rem;
+  color: var(--wine-dark);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 1.55rem;
+}
+.editor-card-header p,
+.manager-card-header p { margin: 0; color: var(--muted); font-size: 0.84rem; line-height: 1.5; }
+.editor-step {
+  display: grid;
+  width: 42px;
+  height: 42px;
+  flex: 0 0 42px;
+  place-items: center;
+  border-radius: 13px;
+  background: var(--wine);
+  color: var(--gold-light);
+  font-size: 0.76rem;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+}
+.editor-card-body { padding: 1.5rem; }
+.editor-card .form-label {
+  margin-bottom: 0.45rem;
+  color: var(--wine-dark);
+  font-size: 0.82rem;
+  font-weight: 800;
+}
+.editor-card .form-control,
+.editor-card .form-select {
+  min-height: 46px;
+  border-color: #d9ccba;
+  border-radius: 11px;
+  background-color: #fffefb;
+}
+.editor-card textarea.form-control { min-height: 190px; line-height: 1.55; resize: vertical; }
+.editor-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-top: 0.4rem;
+}
+.editor-actions span { max-width: 220px; color: var(--muted); font-size: 0.76rem; line-height: 1.45; }
+.editor-actions .btn { min-height: 44px; padding-inline: 1.15rem; border-radius: 11px; font-weight: 800; }
+
+.manager-card { min-height: 340px; }
+.manager-table-wrap { overflow-x: auto; }
+.manager-table { min-width: 720px; margin: 0; }
+.manager-table thead th {
+  padding: 0.95rem 1rem;
+  border-bottom-color: #d9ccba;
+  background: #f5eee4;
+  color: var(--muted);
+  font-size: 0.69rem;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.manager-table tbody td {
+  padding: 1rem;
+  border-color: #eee5d9;
+  color: var(--muted);
+  font-size: 0.84rem;
+}
+.manager-table tbody tr:last-child td { border-bottom: 0; }
+.manager-table tbody tr:hover td { background: #fffaf2; }
+.manager-song-title a { color: var(--wine-dark); font-weight: 800; text-decoration: none; }
+.manager-song-title a:hover { color: var(--wine-soft); }
+.manager-source { min-width: 210px; line-height: 1.45; }
+.table-genre {
+  display: inline-flex;
+  padding: 0.3rem 0.58rem;
+  border-radius: 999px;
+  background: #f1e5d3;
+  color: var(--wine);
+  font-size: 0.68rem;
+  font-weight: 800;
+}
+.manager-table .btn {
+  border-radius: 9px;
+  font-size: 0.74rem;
+  font-weight: 750;
+  white-space: nowrap;
+}
+
+.empty-state { display: grid; min-height: 170px; margin-bottom: 1.25rem; place-content: center; gap: 0.35rem; border: 1px dashed #cebfae; border-radius: 18px; color: var(--muted); text-align: center; }
+.empty-state strong { color: var(--wine); font-family: Georgia, serif; font-size: 1.25rem; }
+
+.site-footer { margin-top: auto; padding: 2.7rem 0; background: var(--wine-dark); color: rgba(255,255,255,0.68); }
+.footer-grid { display: grid; grid-template-columns: 1.5fr 1fr auto; align-items: center; gap: 2rem; }
+.footer-brand { display: block; margin-bottom: 0.35rem; color: #fff; font-family: Georgia, serif; font-size: 1.25rem; font-weight: 700; }
+.site-footer p { margin: 0; font-size: 0.86rem; }
+.site-footer nav { display: flex; flex-wrap: wrap; gap: 1.25rem; }
+.site-footer a { color: var(--gold-light); font-size: 0.86rem; text-decoration: none; }
+
+.card:not(.song-card) { border: 1px solid var(--border); border-radius: 16px; background: var(--paper); }
+.btn-primary { border-color: var(--wine); background: var(--wine); }
+.btn-primary:hover, .btn-primary:focus { border-color: var(--wine-dark); background: var(--wine-dark); }
+.form-control:focus, .form-select:focus { border-color: var(--wine-soft); box-shadow: 0 0 0 0.2rem rgba(84, 28, 43, 0.12); }
+.error { color: #ad243d; }
+
+@media (max-width: 991px) {
+  .site-navbar { padding: 0.75rem 0; }
+  .navbar-collapse { padding-top: 1rem; }
+  .site-nav-links { margin-bottom: 1rem; }
+  .nav-search { width: 100%; max-width: 520px; }
+  .song-workspace { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 767px) {
+  .site-main { padding-top: 1.25rem; }
+  .account-welcome { display: none; }
+  .account-strip-inner { justify-content: flex-end; }
+  .hero-section { border-radius: 20px; }
+  .hero-section {
+    min-height: 560px;
+    justify-content: flex-end;
+    background:
+      linear-gradient(0deg, rgba(255,253,248,0.98) 0%, rgba(255,253,248,0.9) 42%, rgba(45,13,23,0.04) 72%),
+      url('/assets/ethiopian-zemaverse-hero-female-v3.png') 67% center / cover no-repeat;
+  }
+  .section-heading { align-items: start; flex-direction: column; }
+  .section-heading-cross { width: 52px; height: 70px; }
+  .workspace-hero { border-radius: 20px; }
+  .editor-card-header, .manager-card-header, .editor-card-body { padding-inline: 1.1rem; }
+  .footer-grid { grid-template-columns: 1fr; gap: 1.25rem; }
+}
+
+@media (max-width: 575px) {
+  .library-search { flex-wrap: wrap; border-radius: 16px; }
+  .library-search input { width: calc(100% - 44px); flex: auto; }
+  .library-search-clear { margin-left: auto; }
+  .library-search-submit { flex: 1; }
+  .editor-actions { align-items: stretch; flex-direction: column; }
+  .editor-actions span { max-width: none; }
+  .lyrics-header { border-radius: 18px; }
+  .lyrics-sheet { border-radius: 16px; }
+  .lyrics-sheet-footer { align-items: center; flex-direction: column; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { scroll-behavior: auto !important; transition: none !important; }
+}
+
+/* Ethiopian music collection redesign */
+:root {
+  --wine: #ef3d2f; --wine-dark: #12100f; --wine-soft: #bc2a20;
+  --gold: #f3bd2b; --gold-light: #ffe79b; --cream: #f5f1e8;
+  --paper: #fffdf8; --ink: #171514; --muted: #716b63; --border: #dfd7c9;
+}
+body {
+  background: linear-gradient(90deg, rgba(31,135,70,.04), transparent 28%, rgba(243,189,43,.04) 55%, rgba(239,61,47,.05)), var(--cream);
+}
+.site-navbar {
+  background: #11100f;
+  border-bottom: 3px solid;
+  border-image: linear-gradient(90deg,#17934c 0 33%,#f3bd2b 33% 66%,#ef3d2f 66%) 1;
+  box-shadow: 0 10px 34px rgba(0,0,0,.22);
+}
+.account-strip { background: #1c1a18; }
+.brand-lockup strong { font-family: Inter,ui-sans-serif,sans-serif; font-weight: 900; letter-spacing: -.035em; }
+.brand-lockup small { color: #b9b3aa; letter-spacing: .12em; }
+.brand-mark {
+  width: 46px; height: 46px; border: 0; border-radius: 50%;
+  background: conic-gradient(from 15deg,#17934c 0 33%,#f3bd2b 33% 66%,#ef3d2f 66%);
+  color: #111; box-shadow: inset 0 0 0 6px #111,0 0 0 1px rgba(255,255,255,.25);
+}
+.brand-note { font-size: 1.45rem; font-weight: 900; transform: translateY(-1px); }
+.hero-section {
+  min-height: 610px; display: grid; grid-template-columns: minmax(0,.92fr) minmax(420px,1.08fr);
+  align-items: stretch; gap: clamp(2rem,4vw,4.5rem); padding: clamp(2rem,5vw,4.5rem);
+  border: 0; border-radius: 32px; background: #171514; color: #fff;
+  box-shadow: 0 30px 80px rgba(25,20,16,.25);
+}
+.hero-copy { align-self: center; padding-block: 1rem; }
+.hero-section .eyebrow { color: #f3bd2b; }
+.hero-section h1 {
+  max-width: 680px; color: #fff; font-family: Inter,ui-sans-serif,sans-serif;
+  font-size: clamp(3rem,6.5vw,6.4rem); font-weight: 900; line-height: .88; letter-spacing: -.07em;
+}
+.hero-section h1 em { color: #f3bd2b; font-family: "Noto Serif Ethiopic",Georgia,serif; font-style: italic; font-weight: 700; }
+.hero-section .hero-description { max-width: 620px; color: #c7c1b8; }
+.hero-amharic { color: #fff; }
+.hero-account-note { color: #aaa39a !important; }
+.hero-stats { color: #aaa39a; }
+.hero-stats strong { color: #fff; }
+.hero-search { display: flex; max-width: 610px; margin-top: 1.7rem; padding: 6px; border-radius: 14px; background: #fff; }
+.hero-search input { min-width: 0; flex: 1; padding: .85rem 1rem; border: 0; outline: 0; background: transparent; }
+.hero-search button { border: 0; border-radius: 10px; padding: .8rem 1.15rem; background: #ef3d2f; color: #fff; font-weight: 800; }
+.hero-artist-mosaic {
+  display: grid; grid-template-columns: 1.08fr .92fr; grid-template-rows: 1fr 1fr;
+  gap: 10px; min-height: 500px;
+}
+.hero-artist-mosaic figure { position: relative; min-width: 0; min-height: 0; margin: 0; overflow: hidden; border-radius: 18px; background: #2a2724; }
+.hero-artist-mosaic figure:first-child { grid-row: 1 / 3; }
+.hero-artist-mosaic img { width: 100%; height: 100%; object-fit: cover; filter: saturate(.82) contrast(1.06); }
+.hero-artist-mosaic figcaption {
+  position: absolute; right: 0; bottom: 0; left: 0; padding: 2.6rem .85rem .75rem;
+  background: linear-gradient(transparent,rgba(0,0,0,.82)); color: #fff;
+  font-size: .74rem; font-weight: 800; letter-spacing: .04em;
+}
+.hero-artist-mosaic figure:nth-child(4) { display: none; }
+.artists-section { padding-top: 5rem; }
+.artists-section .section-heading h2,.library-section .section-heading h2 {
+  font-family: Inter,ui-sans-serif,sans-serif; font-weight: 900; letter-spacing: -.05em;
+}
+.artist-grid { display: grid; grid-template-columns: repeat(6,minmax(0,1fr)); gap: 1rem; }
+.artist-card {
+  position: relative; min-height: 360px; overflow: hidden; border-radius: 20px;
+  width: 100%; padding: 0; border: 0; text-align: left; cursor: pointer;
+  background: #171514; box-shadow: 0 12px 30px rgba(31,24,18,.14);
+}
+.artist-card:focus-visible { outline: 4px solid #f3bd2b; outline-offset: 3px; }
+.artist-card img { width: 100%; height: 100%; object-fit: cover; filter: saturate(.85); transition: transform 300ms ease; }
+.artist-card:hover img { transform: scale(1.04); }
+.artist-portrait-placeholder {
+  display: grid; width: 100%; height: 100%; place-items: center;
+  background:
+    radial-gradient(circle at 72% 20%, rgba(243,189,43,.72), transparent 27%),
+    radial-gradient(circle at 20% 82%, rgba(239,61,47,.7), transparent 32%),
+    linear-gradient(145deg,#31130f,#7d231c 54%,#171514);
+  color: #fff7df; font-family: "Noto Serif Ethiopic",serif;
+}
+.artist-portrait-placeholder > span {
+  display: grid; width: 7rem; height: 7rem; place-items: center;
+  border: 1px solid rgba(255,255,255,.28); border-radius: 50%;
+  background: rgba(23,21,20,.25); font-size: 2.25rem; font-weight: 800;
+  box-shadow: 0 20px 45px rgba(0,0,0,.22); backdrop-filter: blur(8px);
+}
+.artist-card > div {
+  position: absolute; right: 0; bottom: 0; left: 0; padding: 4.5rem 1rem 1rem;
+  background: linear-gradient(transparent,rgba(0,0,0,.92)); color: #fff;
+}
+.artist-card span { color: #f3bd2b; font-size: .65rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; }
+.artist-card h3 { margin: .25rem 0 0; font-size: 1rem; font-weight: 850; }
+.artist-card p { margin: .2rem 0 0; font-family: "Noto Serif Ethiopic",serif; font-size: .83rem; opacity: .82; }
+.photo-credit { margin: .8rem 0 0; color: var(--muted); font-size: .68rem; }
+.section-heading-icon {
+  display: grid; width: 64px; height: 64px; place-items: center; flex: 0 0 auto;
+  border-radius: 18px; background: #171514; color: #f3bd2b; font-size: 1.8rem;
+}
+.section-heading-cross { display: none; }
+.results-label { background: #171514; color: #fff; }
+.song-card { border-top-color: #ef3d2f; }
+.genre-pill { background: #f2e6c7; color: #5f4610; }
+.metadata-only-badge {
+  margin-top: .9rem; padding: .5rem .65rem; border-radius: 9px;
+  background: #f5efe2; color: #6d6252; font-size: .72rem; font-weight: 750;
+}
+.external-lyrics-notice {
+  margin-top: 1.25rem; padding: 1.25rem; border: 1px solid var(--border);
+  border-radius: 16px; background: var(--paper);
+}
+.external-lyrics-notice p { margin: .35rem 0 .65rem; color: var(--muted); }
+.lyrics-edit-link {
+  display: inline-flex; margin-top: 1.1rem; padding: .65rem 1rem; border-radius: 999px;
+  background: var(--gold); color: #171514; font-weight: 850; text-decoration: none;
+}
+.artist-modal-backdrop {
+  position: fixed; inset: 0; z-index: 1100; display: grid; place-items: center;
+  padding: 1.25rem; overflow-y: auto; background: rgba(10,9,8,.82); backdrop-filter: blur(8px);
+}
+.artist-wiki-card {
+  position: relative; display: grid; grid-template-columns: minmax(280px,.82fr) minmax(0,1.18fr);
+  width: min(980px,100%); max-height: min(780px,calc(100vh - 2.5rem)); overflow: hidden;
+  border-radius: 28px; background: #fffdf8; box-shadow: 0 30px 100px rgba(0,0,0,.45);
+}
+.artist-wiki-card > img { width: 100%; height: 100%; min-height: 600px; object-fit: cover; }
+.artist-wiki-card > .artist-wiki-portrait { min-height: 600px; }
+.artist-wiki-content { align-self: center; padding: clamp(2rem,5vw,4.25rem); overflow-y: auto; }
+.artist-wiki-content h2 { margin: 0; font-size: clamp(2.4rem,5vw,4.4rem); font-weight: 900; letter-spacing: -.06em; }
+.artist-wiki-amharic { margin: .2rem 0 1.6rem; color: var(--wine); font-family: "Noto Serif Ethiopic",serif; font-size: 1.25rem; }
+.artist-wiki-content dl { margin: 0 0 1.5rem; border-block: 1px solid var(--border); }
+.artist-wiki-content dl div { display: grid; grid-template-columns: 90px 1fr; gap: 1rem; padding: .65rem 0; border-bottom: 1px solid var(--border); }
+.artist-wiki-content dl div:last-child { border-bottom: 0; }
+.artist-wiki-content dt { color: var(--muted); font-size: .72rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
+.artist-wiki-content dd { margin: 0; font-weight: 700; }
+.artist-wiki-content > p:last-of-type { color: var(--muted); line-height: 1.7; }
+.artist-wiki-content > a { display: inline-block; margin-top: .5rem; color: var(--wine); font-weight: 850; text-decoration: none; }
+.artist-modal-close {
+  position: absolute; top: 1rem; right: 1rem; z-index: 2; display: grid; width: 44px; height: 44px;
+  place-items: center; border: 0; border-radius: 50%; background: #171514; color: #fff;
+  font-size: 1.75rem; line-height: 1; box-shadow: 0 5px 18px rgba(0,0,0,.25);
+}
+@media (max-width: 1200px) { .artist-grid { grid-template-columns: repeat(3,minmax(0,1fr)); } }
+@media (max-width: 991px) {
+  .hero-section { grid-template-columns: 1fr; }
+  .hero-artist-mosaic { min-height: 430px; }
+}
+@media (max-width: 640px) {
+  .hero-section { min-height: 0; padding: 1.35rem; border-radius: 22px; background: #171514; }
+  .hero-section h1 { font-size: clamp(3.1rem,17vw,4.6rem); }
+  .hero-search { display: grid; }
+  .hero-artist-mosaic { min-height: 340px; grid-template-columns: 1fr 1fr; }
+  .artist-grid { grid-template-columns: repeat(2,minmax(0,1fr)); }
+  .artist-card { min-height: 280px; }
+  .artist-wiki-card { display: block; max-height: calc(100vh - 1.5rem); overflow-y: auto; }
+  .artist-wiki-card > img { height: 280px; min-height: 0; }
+  .artist-wiki-card > .artist-wiki-portrait { height: 280px; min-height: 0; }
+  .artist-wiki-content { padding: 1.5rem; overflow: visible; }
+}
