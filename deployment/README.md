@@ -21,6 +21,7 @@ CloudFront invalidation, and verifies the public site and health endpoint.
 
 The workflow uses GitHub OIDC to assume the
 `zemaverse-github-actions-deploy` role. The trust policy accepts tokens only from
-`Asfawh/zemaverse_mern` on `refs/heads/main`, and its deployment policy is limited
+`Asfawh/zemaverse_mern` on `refs/heads/main` (bound to the immutable GitHub
+owner and repository IDs), and its deployment policy is limited
 to the production site bucket, Lambda function, and CloudFront distribution.
 No AWS access keys or application secrets are stored in GitHub.

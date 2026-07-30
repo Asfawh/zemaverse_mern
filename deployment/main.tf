@@ -51,7 +51,7 @@ data "aws_iam_policy_document" "github_actions_assume_role" {
     condition {
       test     = "StringEquals"
       variable = "token.actions.githubusercontent.com:sub"
-      values   = ["repo:Asfawh/zemaverse_mern:ref:refs/heads/main"]
+      values   = ["repo:Asfawh@44281799/zemaverse_mern@1317695764:ref:refs/heads/main"]
     }
   }
 }
