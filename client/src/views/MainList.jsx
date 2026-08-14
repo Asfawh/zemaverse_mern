@@ -97,6 +97,58 @@ const featuredArtists = [
     linkLabel: 'View Tigrinya music context on Wikipedia',
   },
   {
+    name: 'Neway Debebe', amharic: 'ነዋይ ደበበ', image: '/assets/neway-debebe.jpeg', era: 'Voice of silk',
+    born: '1958 · Hamer Bako', active: '1977–present',
+    genres: 'Ethiopian music · Ethio-jazz · Afro-pop · Reggae',
+    knownFor: 'Maebel Naw · Hageren Alresam · Yetikimt Abeba',
+    bio: 'Neway Debebe is an Ethiopian singer-songwriter whose smooth, wide-ranging voice has moved between traditional Ethiopian rhythms, ethno-jazz, rumba, reggae, calypso, and Afro-pop. After early work with theatre ensembles and the Roha Band, he built a multi-decade solo career and also composed for fellow artists.',
+    wiki: 'https://en.wikipedia.org/wiki/Neway_Debebe',
+  },
+  {
+    name: 'Tewodros Tadesse', amharic: 'ቴዎድሮስ ታደሰ', image: '/assets/tewodros-tadesse.jpeg',
+    era: 'Melodic soul', born: 'Addis Ababa', active: '1980s–present',
+    genres: 'Ethiopian popular music · Amharic ballad',
+    knownFor: 'Lubanjaye · Eyekorekoregn · Sadulaye · Emye Ethiopia',
+    bio: 'Tewodros Tadesse is a veteran Ethiopian vocalist known for a mellow, emotionally resonant style shaped in part by early church singing. His breakthrough album Lubanjaye established him as a household name, followed by enduring releases including Eyekorekoregn and Sadulaye.',
+    wiki: 'https://www.ethiosports.com/2014/09/21/music-is-my-life-tewodros-tadesse/',
+    linkLabel: 'Read the artist interview and profile',
+  },
+  {
+    name: 'Tsegaye Eshetu', amharic: 'ፀጋዬ እሸቱ', image: '/assets/tsegaye-eshetu.jpeg',
+    era: 'Axumite Band veteran', born: 'Ethiopia', active: '1980s–present',
+    genres: 'Traditional Ethiopian music · Modern Ethiopian music',
+    knownFor: 'Tekelekelalu · Gellel Bey · Abay Negade',
+    bio: 'Tsegaye Eshetu is an Ethiopian singer whose repertoire joins traditional and modern styles. Closely associated with the Axumite Band, he has sustained a catalogue of popular recordings and performances since the 1980s.',
+    wiki: 'https://tsegayeeshetu.com/',
+    linkLabel: 'Visit the official artist profile',
+  },
+  {
+    name: 'Tamrat Desta', amharic: 'ታምራት ደስታ', image: '/assets/tamrat-desta.jpg',
+    era: 'Modern balladeer', born: '1978 · Tiqur Wuha', active: '1998–2018',
+    genres: 'Ethiopian music · Amharic pop',
+    knownFor: 'Anleyaym · Kanchi Ayebeltm',
+    bio: 'Tamrat Desta was an Ethiopian singer-songwriter whose heartfelt melodies and romantic Amharic lyrics made him a major voice of the 2000s. His albums Anleyaym and Kanchi Ayebeltm remain central to his musical legacy.',
+    wiki: 'https://en.wikipedia.org/wiki/Tamrat_Desta',
+  },
+  {
+    name: 'Abdu Kiar', amharic: 'አብዱ ኪያር', image: '/assets/abdu-kiar.jpeg', era: 'Merkato storyteller',
+    born: '1976 · Addis Merkato', active: '1997–present',
+    genres: 'Ethiopian music · Reggae · Dancehall · Hip-hop',
+    knownFor: 'Merkato Sefere · Fikir Beamarigna · Minew Shewa',
+    bio: 'Abdu Kiar is an Ethiopian singer-songwriter raised in Addis Ababa’s Merkato district. After performing reggae, dancehall, and hip-hop with the Express band, his 2003 debut Merkato Sefere brought him national recognition for contemporary arrangements and memorable Amharic lyrics.',
+    wiki: 'https://www.musicinafrica.net/node/6365',
+    linkLabel: 'Read the Music In Africa profile',
+  },
+  {
+    name: 'Gigi (Ejigayehu Shibabaw)', amharic: 'ጂጂ · እጅጋየሁ ሽባባው',
+    image: '/assets/gigi-ejigayehu-shibabaw.jpeg', era: 'Global Ethiopian voice',
+    born: '1974 · Chagni', active: '1997–present',
+    genres: 'Ethiopian music · World · Trip-hop · Jazz fusion',
+    knownFor: 'Gigi · Guramayle · Abyssinia Infinite · Gold & Wax',
+    bio: 'Ejigayehu Shibabaw, known internationally as Gigi, carries Ethiopian melodic traditions into jazz, dub, trip-hop, and world-music collaborations. Her internationally acclaimed recordings brought Amharic vocals and Ethiopian musical ideas to a broad global audience.',
+    wiki: 'https://en.wikipedia.org/wiki/Gigi_(singer)',
+  },
+  {
     name: 'Zeritu Kebede', amharic: 'ዘሪቱ ከበደ', image: '/assets/zeritu-kebede.jpg', era: 'Singer-songwriter',
     born: '1984 · Addis Ababa', active: '2005–present', genres: 'Ethio-Pop · Acoustic · Gospel',
     knownFor: 'Zeritu · Artificial · Eza Alkerehum',
@@ -283,8 +335,10 @@ function MainList() {
           Photos: Teddy Afro and Aster Aweke by Bef 2011; Mahmoud Ahmed by Phil Pasquini;
           Tilahun Gessesse via Ethiopian Broadcasting Corporation; Alemayehu Eshete by Schorle;
           Hachalu Hundessa by OMN;
-          Zeritu Kebede by AddisAssefa. Additional artist imagery is sourced from
-          Music In Africa, Spotify, Apple Music, and EphremTube artist profiles.
+          Zeritu Kebede by AddisAssefa. Neway Debebe, Tewodros Tadesse, Tsegaye Eshetu,
+          Tamrat Desta, Abdu Kiar, and Gigi portraits supplied by the ZemaVerse curator.
+          Additional artist imagery is sourced from Music In Africa, Spotify, Apple Music,
+          and EphremTube artist profiles.
           Wikimedia Commons photographs are used under their listed licenses.
         </p>
       </section>
