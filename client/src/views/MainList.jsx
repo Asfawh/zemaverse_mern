@@ -2,7 +2,7 @@
 import { useContext, useEffect, useMemo, useState } from 'react';
 
 /* react-router */
-import { useSearchParams } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 
 /* local */
 import { AuthContext } from '../context/AuthContext';
@@ -15,6 +15,7 @@ import { getDisplayedZemaVerseSource } from '../config/zemaverse';
 const featuredArtists = [
   {
     name: 'Teddy Afro', amharic: 'ቴዲ አፍሮ', image: '/assets/teddy-afro.jpg', era: 'Modern icon',
+    artistAliases: ['Tewodros Kassahun', 'Tewodros Kassahun (Teddy Afro)'],
     born: '1976 · Addis Ababa', active: '2001–present', genres: 'Ethiopian music · Reggae fusion',
     knownFor: 'Abugida · Tikur Sew · Ethiopia',
     bio: 'Tewodros Kassahun, known as Teddy Afro, blends traditional Ethiopian sounds, reggae, and socially engaged songwriting. His albums and large public concerts have made him one of Ethiopia’s most influential contemporary performers.',
@@ -124,6 +125,7 @@ const featuredArtists = [
   },
   {
     name: 'Tamrat Desta', amharic: 'ታምራት ደስታ', image: '/assets/tamrat-desta.jpg',
+    artistAliases: ['Tamirat Desta'],
     era: 'Modern balladeer', born: '1978 · Tiqur Wuha', active: '1998–2018',
     genres: 'Ethiopian music · Amharic pop',
     knownFor: 'Anleyaym · Kanchi Ayebeltm',
@@ -141,6 +143,7 @@ const featuredArtists = [
   },
   {
     name: 'Gigi (Ejigayehu Shibabaw)', amharic: 'ጂጂ · እጅጋየሁ ሽባባው',
+    artistAliases: ['Gigi', 'Ejigayehu Shibabaw', 'Gigi Shibabaw'],
     image: '/assets/gigi-ejigayehu-shibabaw.jpeg', era: 'Global Ethiopian voice',
     born: '1974 · Chagni', active: '1997–present',
     genres: 'Ethiopian music · World · Trip-hop · Jazz fusion',
@@ -156,6 +159,13 @@ const featuredArtists = [
     wiki: 'https://en.wikipedia.org/wiki/Zeritu_Kebede',
   },
 ];
+
+function normalizeArtistName(value = '') {
+  return value
+    .normalize('NFKD')
+    .toLocaleLowerCase()
+    .replace(/[\p{P}\p{S}\s]+/gu, '');
+}
 
 function ArtistPortrait({ artist, className = '' }) {
   if (artist.image) {
@@ -227,6 +237,21 @@ function MainList() {
       .filter(Boolean)
       .some((value) => value.toLowerCase().includes(query));
   }), [songs, query]);
+
+  const selectedArtistSongs = useMemo(() => {
+    if (!selectedArtist) return [];
+
+    const artistNames = [selectedArtist.name, ...(selectedArtist.artistAliases || [])]
+      .map(normalizeArtistName);
+
+    return songs
+      .filter((song) => artistNames.includes(normalizeArtistName(song.artistName)))
+      .sort((first, second) => (first.songName || '').localeCompare(
+        second.songName || '',
+        ['am', 'en'],
+        { sensitivity: 'base' }
+      ));
+  }, [selectedArtist, songs]);
 
   useEffect(() => {
     setSearchValue(searchParams.get('query') || '');
@@ -362,6 +387,24 @@ function MainList() {
                 <div><dt>Known for</dt><dd>{selectedArtist.knownFor}</dd></div>
               </dl>
               <p>{selectedArtist.bio}</p>
+              {selectedArtistSongs.length > 0 && (
+                <section className="artist-wiki-lyrics" aria-labelledby="artist-lyrics-heading">
+                  <div className="artist-wiki-lyrics-heading">
+                    <h3 id="artist-lyrics-heading">Lyrics by {selectedArtist.name}</h3>
+                    <span>{selectedArtistSongs.length}</span>
+                  </div>
+                  <ol>
+                    {selectedArtistSongs.map((song) => (
+                      <li key={song._id}>
+                        <Link to={`/songs/${song._id}`}>
+                          <span>{song.songName}</span>
+                          {song.pageNumber && <small>ZM#{song.pageNumber}</small>}
+                        </Link>
+                      </li>
+                    ))}
+                  </ol>
+                </section>
+              )}
               <a href={selectedArtist.wiki} target="_blank" rel="noreferrer">
                 {selectedArtist.linkLabel || 'Read the full Wikipedia article'} <span aria-hidden="true">↗</span>
               </a>

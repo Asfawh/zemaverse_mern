@@ -48,6 +48,8 @@ jobs:
         run: npm ci --prefix server --omit=dev
 
       - name: Validate and build
+        env:
+          VITE_DONATION_URL: ${{ vars.VITE_DONATION_URL }}
         run: |
           npm run build
           node --check server/server.js

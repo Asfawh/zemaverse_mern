@@ -9,6 +9,7 @@ import Details from './views/Details';
 import UpdateForm from './views/UpdateForm';
 import MainList from './views/MainList';
 import Favorites from './views/Favorites';
+import Support from './views/Support';
 import Footer from './components/Footer';
 
 function App() {
@@ -23,6 +24,7 @@ function App() {
               <Route path="/" element={<Navigate to="/songs" />} />
               <Route path="/songs" element={<MainList />} />
               <Route path="/favorites" element={<Favorites />} />
+              <Route path="/support" element={<Support />} />
               <Route path="/songs/new" element={<Main />} />
               <Route path="/songs/:id" element={<Details />} />
               <Route path="/songs/:id/edit" element={<UpdateForm />} />

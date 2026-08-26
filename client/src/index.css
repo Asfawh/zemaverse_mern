@@ -83,6 +83,22 @@ a:hover { color: var(--wine); }
 .site-nav-links { gap: 0.4rem; }
 .site-nav-links .nav-link { color: rgba(255,255,255,0.78); font-size: 0.92rem; font-weight: 650; }
 .site-nav-links .nav-link:hover, .site-nav-links .nav-link.active { color: #fff; }
+.nav-utility { display: flex; align-items: center; gap: 0.85rem; margin-left: auto; }
+.nav-utility .support-nav-link {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: 0.42rem;
+  padding: 0.46rem 0.86rem;
+  border: 1px solid rgba(243, 223, 170, 0.56);
+  border-radius: 999px;
+  color: var(--wine-dark);
+  background: var(--gold-light);
+  box-shadow: 0 7px 18px rgba(27, 7, 13, 0.16);
+}
+.nav-utility .support-nav-link:hover,
+.nav-utility .support-nav-link.active { border-color: #fff3cf; color: var(--wine-dark); background: #fff0c8; }
+.support-nav-link span { color: var(--wine); font-size: 0.86rem; }
 
 .nav-search { display: flex; width: min(100%, 340px); }
 .nav-search-input {
@@ -434,6 +450,56 @@ a:hover { color: var(--wine); }
 }
 .favorites-empty a { color: var(--wine); font-size: 0.84rem; font-weight: 800; }
 
+.support-page { display: grid; gap: 1.5rem; }
+.support-hero {
+  position: relative;
+  display: flex;
+  min-height: 470px;
+  overflow: hidden;
+  align-items: center;
+  padding: clamp(2.4rem, 6vw, 5rem);
+  border: 1px solid rgba(243, 223, 170, 0.22);
+  border-radius: 28px;
+  background:
+    linear-gradient(90deg, rgba(36, 7, 15, 0.96) 0%, rgba(54, 13, 24, 0.88) 47%, rgba(54, 13, 24, 0.22) 100%),
+    url('/assets/ethiopian-zemaverse-hero-female-v3.png') center / cover no-repeat;
+  color: #fff;
+  box-shadow: 0 24px 60px rgba(45, 13, 23, 0.18);
+}
+.support-hero::after { position: absolute; right: -8rem; bottom: -13rem; width: 32rem; height: 32rem; border: 1px solid rgba(243, 223, 170, 0.16); border-radius: 50%; content: ""; }
+.support-hero-copy { position: relative; z-index: 1; max-width: 660px; }
+.support-hero .eyebrow { color: var(--gold-light); }
+.support-hero h1 { max-width: 760px; margin: 0; font-family: Georgia, "Times New Roman", serif; font-size: clamp(2.8rem, 7vw, 5.6rem); line-height: 0.97; letter-spacing: -0.045em; }
+.support-hero p { max-width: 700px; margin: 1.25rem 0 0; color: rgba(255,255,255,0.76); font-size: clamp(0.98rem, 2vw, 1.1rem); line-height: 1.7; }
+.support-hero .support-amharic { color: var(--gold-light); font-family: "Noto Serif Ethiopic", "Abyssinica SIL", Georgia, serif; font-weight: 650; }
+.support-content { display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(310px, 0.65fr); gap: 1.5rem; align-items: start; }
+.support-impact-card, .support-checkout-card { border: 1px solid var(--border); border-radius: 24px; background: var(--paper); box-shadow: 0 18px 45px rgba(77, 45, 49, 0.09); }
+.support-impact-card { padding: clamp(2rem, 5vw, 3.8rem); }
+.support-impact-card h2, .support-checkout-card h2, .support-thanks h2 { margin: 0; color: var(--wine-dark); font-family: Georgia, "Times New Roman", serif; }
+.support-impact-card h2 { font-size: clamp(2rem, 4vw, 3.3rem); }
+.support-intro { max-width: 720px; margin: 1rem 0 2rem; color: var(--muted); line-height: 1.7; }
+.support-area-list { display: grid; border-top: 1px solid var(--border); }
+.support-area { display: grid; grid-template-columns: 48px 1fr; gap: 1rem; padding: 1.4rem 0; border-bottom: 1px solid var(--border); }
+.support-area > span { display: grid; width: 42px; height: 42px; place-items: center; border-radius: 13px; background: #f1e5d3; color: var(--wine); font-size: 0.72rem; font-weight: 900; }
+.support-area h3 { margin: 0 0 0.35rem; color: var(--wine); font-family: Georgia, serif; font-size: 1.2rem; }
+.support-area p { margin: 0; color: var(--muted); font-size: 0.9rem; line-height: 1.6; }
+.support-checkout-card { position: sticky; top: 1.5rem; overflow: hidden; padding: 2rem; border-color: #d8c399; background: radial-gradient(circle at 100% 0, rgba(210, 168, 74, 0.2), transparent 13rem), var(--paper); }
+.support-checkout-icon { display: grid; width: 54px; height: 54px; margin-bottom: 1.25rem; place-items: center; border-radius: 17px; background: var(--wine); color: var(--gold-light); box-shadow: 0 10px 24px rgba(84, 28, 43, 0.18); }
+.support-kicker { color: var(--wine-soft); font-size: 0.72rem; font-weight: 900; letter-spacing: 0.12em; text-transform: uppercase; }
+.support-checkout-card h2 { margin-top: 0.4rem; font-size: 2rem; }
+.support-checkout-card > p { color: var(--muted); line-height: 1.65; }
+.support-primary-action, .support-setup-note a { display: inline-flex; width: 100%; min-height: 50px; align-items: center; justify-content: center; gap: 0.6rem; padding: 0.78rem 1rem; border-radius: 13px; background: var(--wine); color: #fff; font-weight: 850; text-align: center; text-decoration: none; }
+.support-primary-action:hover, .support-setup-note a:hover { color: #fff; background: var(--wine-dark); }
+.support-setup-note { display: grid; gap: 0.7rem; margin-top: 1.25rem; padding: 1.15rem; border: 1px solid #dfcfad; border-radius: 15px; background: #faf1df; }
+.support-setup-note strong { color: var(--wine-dark); }
+.support-setup-note span { color: var(--muted); font-size: 0.84rem; line-height: 1.5; }
+.support-setup-note a { min-height: 44px; margin-top: 0.2rem; font-size: 0.84rem; }
+.support-checkout-card .support-security-note { margin: 1.1rem 0 0; padding-top: 1rem; border-top: 1px solid var(--border); color: #8c7d7f; font-size: 0.75rem; line-height: 1.55; }
+.support-thanks { display: flex; align-items: center; gap: 1.25rem; padding: 1.7rem 2rem; border: 1px solid #dccda8; border-radius: 20px; background: linear-gradient(110deg, #f4e7c8, #fffaf0); }
+.support-thanks > span { color: var(--wine); font-size: 1.8rem; }
+.support-thanks h2 { font-size: 1.4rem; }
+.support-thanks p { margin: 0.35rem 0 0; color: var(--muted); font-size: 0.86rem; line-height: 1.5; }
+
 .lyrics-page { width: min(100%, 900px); margin: 0 auto; }
 .lyrics-back {
   display: inline-flex;
@@ -725,6 +791,11 @@ a:hover { color: var(--wine); }
   .site-navbar { padding: 0.75rem 0; }
   .navbar-collapse { padding-top: 1rem; }
   .site-nav-links { margin-bottom: 1rem; }
+  .nav-utility { width: 100%; align-items: flex-start; flex-direction: column; margin-left: 0; }
+  .nav-utility .support-nav-link { width: fit-content; margin-bottom: 0.15rem; }
+  .nav-search { width: 100%; max-width: 520px; }
+  .support-content { grid-template-columns: 1fr; }
+  .support-checkout-card { position: static; }
   .nav-search { width: 100%; max-width: 520px; }
   .song-workspace { grid-template-columns: 1fr; }
 }
@@ -741,6 +812,7 @@ a:hover { color: var(--wine); }
       linear-gradient(0deg, rgba(255,253,248,0.98) 0%, rgba(255,253,248,0.9) 42%, rgba(45,13,23,0.04) 72%),
       url('/assets/ethiopian-zemaverse-hero-female-v3.png') 67% center / cover no-repeat;
   }
+  .support-hero { min-height: 440px; align-items: flex-end; background: linear-gradient(0deg, rgba(36, 7, 15, 0.97) 0%, rgba(54, 13, 24, 0.76) 60%, rgba(54, 13, 24, 0.2) 100%), url('/assets/ethiopian-zemaverse-hero-female-v3.png') 67% center / cover no-repeat; }
   .section-heading { align-items: start; flex-direction: column; }
   .section-heading-cross { width: 52px; height: 70px; }
   .workspace-hero { border-radius: 20px; }
@@ -749,6 +821,8 @@ a:hover { color: var(--wine); }
 }
 
 @media (max-width: 575px) {
+  .support-hero, .support-impact-card, .support-checkout-card { border-radius: 18px; }
+  .support-thanks { align-items: flex-start; }
   .library-search { flex-wrap: wrap; border-radius: 16px; }
   .library-search input { width: calc(100% - 44px); flex: auto; }
   .library-search-clear { margin-left: auto; }
@@ -899,6 +973,30 @@ body {
 .artist-wiki-content dd { margin: 0; font-weight: 700; }
 .artist-wiki-content > p:last-of-type { color: var(--muted); line-height: 1.7; }
 .artist-wiki-content > a { display: inline-block; margin-top: .5rem; color: var(--wine); font-weight: 850; text-decoration: none; }
+.artist-wiki-lyrics {
+  margin: 1.5rem 0; padding: 1.1rem; border: 1px solid var(--border);
+  border-radius: 18px; background: #f8f2e7;
+}
+.artist-wiki-lyrics-heading { display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+.artist-wiki-lyrics-heading h3 { margin: 0; font-size: 1rem; letter-spacing: -.02em; }
+.artist-wiki-lyrics-heading > span {
+  display: grid; min-width: 1.8rem; height: 1.8rem; place-items: center;
+  border-radius: 999px; background: var(--wine); color: #fff; font-size: .72rem; font-weight: 850;
+}
+.artist-wiki-lyrics ol {
+  display: grid; gap: .35rem; max-height: 190px; margin: .8rem 0 0; padding: 0;
+  overflow-y: auto; list-style: none; scrollbar-width: thin;
+}
+.artist-wiki-lyrics li { min-width: 0; }
+.artist-wiki-lyrics a {
+  display: flex; align-items: center; justify-content: space-between; gap: .75rem;
+  padding: .58rem .7rem; border-radius: 10px; color: #302820; font-weight: 750;
+  text-decoration: none; transition: background-color 160ms ease, color 160ms ease;
+}
+.artist-wiki-lyrics a:hover { background: #fff; color: var(--wine); }
+.artist-wiki-lyrics a:focus-visible { outline: 3px solid var(--gold); outline-offset: 1px; }
+.artist-wiki-lyrics a span { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.artist-wiki-lyrics a small { flex: 0 0 auto; color: var(--muted); font-size: .68rem; }
 .artist-modal-close {
   position: absolute; top: 1rem; right: 1rem; z-index: 2; display: grid; width: 44px; height: 44px;
   place-items: center; border: 0; border-radius: 50%; background: #171514; color: #fff;
