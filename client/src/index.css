@@ -462,7 +462,7 @@ a:hover { color: var(--wine); }
   border-radius: 28px;
   background:
     linear-gradient(90deg, rgba(36, 7, 15, 0.96) 0%, rgba(54, 13, 24, 0.88) 47%, rgba(54, 13, 24, 0.22) 100%),
-    url('/assets/ethiopian-music-support-hero-v1.png') center / cover no-repeat;
+    url('/assets/ethiopian-music-support-hero-v2.png') center / cover no-repeat;
   color: #fff;
   box-shadow: 0 24px 60px rgba(45, 13, 23, 0.18);
 }
@@ -812,7 +812,7 @@ a:hover { color: var(--wine); }
       linear-gradient(0deg, rgba(255,253,248,0.98) 0%, rgba(255,253,248,0.9) 42%, rgba(45,13,23,0.04) 72%),
       url('/assets/ethiopian-zemaverse-hero-female-v3.png') 67% center / cover no-repeat;
   }
-  .support-hero { min-height: 440px; align-items: flex-end; background: linear-gradient(0deg, rgba(36, 7, 15, 0.97) 0%, rgba(54, 13, 24, 0.76) 60%, rgba(54, 13, 24, 0.2) 100%), url('/assets/ethiopian-music-support-hero-v1.png') 64% center / cover no-repeat; }
+  .support-hero { min-height: 440px; align-items: flex-end; background: linear-gradient(0deg, rgba(36, 7, 15, 0.97) 0%, rgba(54, 13, 24, 0.76) 60%, rgba(54, 13, 24, 0.2) 100%), url('/assets/ethiopian-music-support-hero-v2.png') 64% center / cover no-repeat; }
   .section-heading { align-items: start; flex-direction: column; }
   .section-heading-cross { width: 52px; height: 70px; }
   .workspace-hero { border-radius: 20px; }
