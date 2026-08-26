@@ -49,6 +49,10 @@ function AppBar() {
             )}
           </Nav>
           <div className="nav-utility">
+            <Nav.Link className="companion-nav-link" href="https://mezmure.org/">
+              <span aria-hidden="true">↔</span>
+              Visit Mezmure
+            </Nav.Link>
             <LinkContainer to="/support">
               <Nav.Link className="support-nav-link">
                 <span aria-hidden="true">♥</span>
