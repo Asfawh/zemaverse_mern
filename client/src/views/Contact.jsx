@@ -35,6 +35,10 @@ function Contact() {
           <h2>chosky05@gmail.com</h2>
           <p>We review messages as promptly as possible. Rights and safety concerns receive priority.</p>
           <a className="trust-action" href="mailto:chosky05@gmail.com?subject=ZemaVerse%20inquiry">Send an email</a>
+          <div className="contact-phone">
+            <span className="eyebrow">Phone</span>
+            <a href="tel:+12409206006">(240) 920-6006</a>
+          </div>
           <div className="contact-note">
             <strong>Rights or removal request?</strong>
             <span>Use the subject “Rights request” and identify the material, your relationship to it, and the requested action.</span>
