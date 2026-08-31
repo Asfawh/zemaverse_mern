@@ -12,7 +12,7 @@ function About() {
 
   return (
     <div className="trust-page">
-      <header className="trust-hero">
+      <header className="trust-hero trust-hero-image">
         <span className="eyebrow">About ZemaVerse</span>
         <h1>Every song carries memory.</h1>
         <p>

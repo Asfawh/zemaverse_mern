@@ -12,7 +12,7 @@ function Contact() {
 
   return (
     <div className="trust-page">
-      <header className="trust-hero trust-hero-compact">
+      <header className="trust-hero trust-hero-image trust-hero-compact">
         <span className="eyebrow">Contact Us</span>
         <h1>We welcome thoughtful messages.</h1>
         <p>

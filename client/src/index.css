@@ -516,6 +516,8 @@ a:hover { color: var(--wine); }
 
 .trust-page { display: grid; gap: 1.5rem; }
 .trust-hero { position: relative; overflow: hidden; padding: clamp(2.5rem, 7vw, 5.5rem); border-radius: 28px; background: radial-gradient(circle at 88% 14%, rgba(210,168,74,.3), transparent 18rem), linear-gradient(120deg, var(--wine-dark), var(--wine)); color: #fff; box-shadow: 0 24px 60px rgba(45,13,23,.17); }
+.trust-hero-image { min-height: 390px; display: flex; flex-direction: column; justify-content: center; background: linear-gradient(90deg, rgba(28,18,14,.95) 0%, rgba(41,22,17,.74) 52%, rgba(28,18,14,.2) 100%), url('/assets/ethiopian-music-about-contact.png') center / cover no-repeat; }
+.trust-hero-image.trust-hero-compact { min-height: 330px; }
 .trust-hero::after { position: absolute; right: -7rem; bottom: -15rem; width: 31rem; height: 31rem; border: 1px solid rgba(243,223,170,.18); border-radius: 50%; content: ""; }
 .trust-hero .eyebrow { color: var(--gold-light); }
 .trust-hero h1 { position: relative; z-index: 1; max-width: 880px; margin: 0; font-family: Georgia,"Times New Roman",serif; font-size: clamp(2.7rem,7vw,5.7rem); line-height: .98; letter-spacing: -.045em; }
