@@ -37,6 +37,12 @@ function AppBar() {
             <LinkContainer to="/songs">
               <Nav.Link>Lyrics Library</Nav.Link>
             </LinkContainer>
+            <LinkContainer to="/about">
+              <Nav.Link>About</Nav.Link>
+            </LinkContainer>
+            <LinkContainer to="/contact">
+              <Nav.Link>Contact</Nav.Link>
+            </LinkContainer>
             {state.user && (
               <>
                 <LinkContainer to="/favorites">

@@ -11,8 +11,11 @@ function Footer() {
         </div>
         <nav aria-label="Footer navigation">
           <Link to="/songs">Song Library</Link>
+          <Link to="/about">About Us</Link>
+          <Link to="/contact">Contact Us</Link>
           <Link to="/support">Support ZemaVerse</Link>
-          <a href="mailto:contact@zemaverse.com">Contact</a>
+          <Link to="/privacy">Privacy</Link>
+          <Link to="/terms">Terms</Link>
         </nav>
         <small>© {new Date().getFullYear()} ZemaVerse.com</small>
       </Container>

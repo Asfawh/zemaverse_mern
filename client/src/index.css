@@ -514,6 +514,49 @@ a:hover { color: var(--wine); }
 .support-thanks h2 { font-size: 1.4rem; }
 .support-thanks p { margin: 0.35rem 0 0; color: var(--muted); font-size: 0.86rem; line-height: 1.5; }
 
+.trust-page { display: grid; gap: 1.5rem; }
+.trust-hero { position: relative; overflow: hidden; padding: clamp(2.5rem, 7vw, 5.5rem); border-radius: 28px; background: radial-gradient(circle at 88% 14%, rgba(210,168,74,.3), transparent 18rem), linear-gradient(120deg, var(--wine-dark), var(--wine)); color: #fff; box-shadow: 0 24px 60px rgba(45,13,23,.17); }
+.trust-hero::after { position: absolute; right: -7rem; bottom: -15rem; width: 31rem; height: 31rem; border: 1px solid rgba(243,223,170,.18); border-radius: 50%; content: ""; }
+.trust-hero .eyebrow { color: var(--gold-light); }
+.trust-hero h1 { position: relative; z-index: 1; max-width: 880px; margin: 0; font-family: Georgia,"Times New Roman",serif; font-size: clamp(2.7rem,7vw,5.7rem); line-height: .98; letter-spacing: -.045em; }
+.trust-hero p { position: relative; z-index: 1; max-width: 760px; margin: 1.35rem 0 0; color: rgba(255,255,255,.76); font-size: clamp(1rem,2vw,1.14rem); line-height: 1.75; }
+.trust-hero-compact { padding-block: clamp(2.5rem,6vw,4.5rem); }
+.trust-section { padding: clamp(2rem,5vw,4rem); border: 1px solid var(--border); border-radius: 24px; background: var(--paper); box-shadow: 0 17px 42px rgba(77,45,49,.07); }
+.trust-section h2, .trust-callout h2, .contact-card h2, .contact-reason h2, .policy-page h1, .policy-page h2 { color: var(--wine-dark); font-family: Georgia,"Times New Roman",serif; }
+.trust-section > h2 { margin: 0 0 1.5rem; font-size: clamp(2rem,4vw,3.25rem); }
+.trust-story { display: grid; grid-template-columns: minmax(220px,.7fr) minmax(0,1.3fr); gap: clamp(2rem,6vw,5rem); }
+.trust-story h2 { margin: 0; font-size: clamp(2rem,4vw,3.15rem); line-height: 1.05; }
+.trust-story p { margin: 0 0 1.2rem; color: var(--muted); line-height: 1.8; }
+.trust-card-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1rem; }
+.trust-card { min-width: 0; padding: 1.6rem; border: 1px solid #dfd2c1; border-radius: 18px; background: #fbf5e9; }
+.trust-card > span { color: var(--wine-soft); font-size: .72rem; font-weight: 900; letter-spacing: .12em; }
+.trust-card h3 { margin: 1rem 0 .55rem; color: var(--wine); font-family: Georgia,serif; font-size: 1.35rem; }
+.trust-card p { margin: 0; color: var(--muted); font-size: .9rem; line-height: 1.68; }
+.trust-callout { display: flex; align-items: center; justify-content: space-between; gap: 2rem; padding: clamp(1.7rem,4vw,2.6rem); border: 1px solid #dccda8; border-radius: 22px; background: linear-gradient(110deg,#f4e7c8,#fffaf0); }
+.trust-callout h2 { margin: 0; font-size: clamp(1.55rem,3vw,2.3rem); }
+.trust-callout p { margin: .45rem 0 0; color: var(--muted); }
+.trust-action { display: inline-flex; min-height: 48px; flex: 0 0 auto; align-items: center; justify-content: center; padding: .75rem 1.15rem; border-radius: 12px; background: var(--wine); color: #fff; font-weight: 850; text-decoration: none; }
+.trust-action:hover { color: #fff; background: var(--wine-dark); }
+.contact-layout { display: grid; grid-template-columns: minmax(0,1.15fr) minmax(300px,.85fr); gap: 1.5rem; align-items: start; }
+.contact-reasons { display: grid; grid-template-columns: repeat(2,1fr); gap: 1rem; }
+.contact-reason, .contact-card { padding: clamp(1.5rem,4vw,2.4rem); border: 1px solid var(--border); border-radius: 20px; background: var(--paper); box-shadow: 0 16px 38px rgba(77,45,49,.07); }
+.contact-reason h2 { margin: 0 0 .6rem; font-size: 1.35rem; }
+.contact-reason p, .contact-card p { margin: 0; color: var(--muted); line-height: 1.7; }
+.contact-card { position: sticky; top: 1.5rem; }
+.contact-card h2 { overflow-wrap: anywhere; margin: .55rem 0 .8rem; font-size: clamp(1.45rem,3vw,2rem); }
+.contact-card .trust-action { width: 100%; margin-top: 1.3rem; }
+.contact-note { display: grid; gap: .35rem; margin-top: 1.25rem; padding: 1rem; border-radius: 14px; background: #f8edda; }
+.contact-note strong { color: var(--wine-dark); }
+.contact-note span { color: var(--muted); font-size: .82rem; line-height: 1.55; }
+.policy-page { width: min(100%,900px); margin: 0 auto; padding: clamp(2rem,6vw,4.5rem); border: 1px solid var(--border); border-radius: 24px; background: var(--paper); box-shadow: 0 20px 50px rgba(77,45,49,.08); }
+.policy-page header { margin-bottom: 2.5rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+.policy-page h1 { margin: 0; font-size: clamp(2.7rem,7vw,5rem); letter-spacing: -.04em; }
+.policy-page header p { margin: .8rem 0 0; color: var(--muted); font-size: .84rem; }
+.policy-page section + section { margin-top: 2rem; }
+.policy-page h2 { margin: 0 0 .65rem; font-size: 1.45rem; }
+.policy-page section p { margin: 0; color: var(--muted); line-height: 1.8; }
+.policy-page a { font-weight: 750; }
+
 .lyrics-page { width: min(100%, 900px); margin: 0 auto; }
 .lyrics-back {
   display: inline-flex;
@@ -1033,4 +1076,18 @@ body {
   .artist-wiki-card > img { height: 280px; min-height: 0; }
   .artist-wiki-card > .artist-wiki-portrait { height: 280px; min-height: 0; }
   .artist-wiki-content { padding: 1.5rem; overflow: visible; }
+}
+
+@media (max-width: 991px) {
+  .trust-card-grid { grid-template-columns: 1fr; }
+  .contact-layout { grid-template-columns: 1fr; }
+  .contact-card { position: static; }
+}
+
+@media (max-width: 767px) {
+  .trust-hero { border-radius: 20px; }
+  .trust-story { grid-template-columns: 1fr; gap: 1.5rem; }
+  .trust-callout { align-items: stretch; flex-direction: column; }
+  .contact-reasons { grid-template-columns: 1fr; }
+  .policy-page { border-radius: 18px; }
 }
