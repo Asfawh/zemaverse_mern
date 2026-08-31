@@ -22,7 +22,7 @@ function Terms() {
       </section>
       <section>
         <h2>Rights-holder requests</h2>
-        <p>Artists, songwriters, publishers, photographers, and other rights holders may request a correction, attribution update, review, or removal. Email <a href="mailto:contact@zemaverse.com?subject=Rights%20request">contact@zemaverse.com</a> with the page address, description of the work, your relationship to it, and the requested action.</p>
+        <p>Artists, songwriters, publishers, photographers, and other rights holders may request a correction, attribution update, review, or removal. Email <a href="mailto:chosky05@gmail.com?subject=ZemaVerse%20rights%20request">chosky05@gmail.com</a> with the page address, description of the work, your relationship to it, and the requested action.</p>
       </section>
       <section>
         <h2>Community contributions</h2>

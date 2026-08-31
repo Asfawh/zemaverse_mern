@@ -32,9 +32,9 @@ function Contact() {
         </div>
         <aside className="contact-card">
           <span className="eyebrow">Email</span>
-          <h2>contact@zemaverse.com</h2>
+          <h2>chosky05@gmail.com</h2>
           <p>We review messages as promptly as possible. Rights and safety concerns receive priority.</p>
-          <a className="trust-action" href="mailto:contact@zemaverse.com?subject=ZemaVerse%20inquiry">Send an email</a>
+          <a className="trust-action" href="mailto:chosky05@gmail.com?subject=ZemaVerse%20inquiry">Send an email</a>
           <div className="contact-note">
             <strong>Rights or removal request?</strong>
             <span>Use the subject “Rights request” and identify the material, your relationship to it, and the requested action.</span>

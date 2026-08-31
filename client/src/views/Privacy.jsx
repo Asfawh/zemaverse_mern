@@ -30,7 +30,7 @@ function Privacy() {
       </section>
       <section>
         <h2>Your choices</h2>
-        <p>You may ask about, correct, or request deletion of personal information associated with your ZemaVerse account, subject to legal and operational requirements. Contact us at <a href="mailto:contact@zemaverse.com?subject=Privacy%20request">contact@zemaverse.com</a>.</p>
+        <p>You may ask about, correct, or request deletion of personal information associated with your ZemaVerse account, subject to legal and operational requirements. Contact us at <a href="mailto:chosky05@gmail.com?subject=ZemaVerse%20privacy%20request">chosky05@gmail.com</a>.</p>
       </section>
       <section>
         <h2>Updates</h2>

@@ -71,7 +71,7 @@ function Support() {
             <div className="support-setup-note" role="status">
               <strong>Online contributions are being prepared.</strong>
               <span>Contact us for the available ways to support ZemaVerse.</span>
-              <a href="mailto:contact@zemaverse.com?subject=Supporting%20ZemaVerse">
+              <a href="mailto:chosky05@gmail.com?subject=Supporting%20ZemaVerse">
                 Contact us to support
               </a>
             </div>
