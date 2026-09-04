@@ -13,6 +13,7 @@
     ,"seed:samples": "node scripts/seed-samples.js",
     "import:ethiozeima-metadata": "node scripts/import-ethiozeima-metadata.js"
     ,"update:ez-catalog": "node scripts/update-ez-catalog.js"
+    ,"import:etorika-metadata": "node --env-file=.env scripts/import-etorika-metadata.js"
   },
   "keywords": [],
   "author": "",

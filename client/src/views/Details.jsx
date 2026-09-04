@@ -54,6 +54,9 @@ function Details() {
         <h1>{song.songName}</h1>
         <div className="lyrics-meta">
           <span>{song.artistName || 'Traditional'}</span>
+          {song.albumName && <span>Album: {song.albumName}{song.releaseYear ? ` (${song.releaseYear})` : ''}</span>}
+          {song.trackNumber && <span>Track {song.trackNumber}</span>}
+          {song.duration && <span>{song.duration}</span>}
           {song.genre && <span>{song.genre}</span>}
           {song.pageNumber && <span>ZM#{song.pageNumber}</span>}
           {displayedSource && <span>Source: {displayedSource}</span>}

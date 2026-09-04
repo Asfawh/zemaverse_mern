@@ -19,6 +19,10 @@ const SongSchema = new Schema(
       maxLength: [160, 'Song name must be less than 160 characters long.'],
     },
     artistName: String,
+    albumName: { type: String, trim: true, maxLength: 160 },
+    releaseYear: { type: Number, min: 1900, max: 2200 },
+    trackNumber: { type: Number, min: 1 },
+    duration: { type: String, trim: true, maxLength: 12 },
     fileName: String,
     source: {
       type: String,
