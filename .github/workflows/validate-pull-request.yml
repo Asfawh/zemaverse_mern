@@ -1,0 +1,57 @@
+name: Validate pull request
+
+on:
+  pull_request:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+concurrency:
+  group: zemaverse-pr-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  validate:
+    name: Test and build
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v6.0.2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v6.4.0
+        with:
+          node-version: "22"
+          cache: npm
+          cache-dependency-path: |
+            client/package-lock.json
+            server/package-lock.json
+
+      - name: Install dependencies
+        run: |
+          npm ci --prefix client
+          npm ci --prefix server
+
+      - name: Test API
+        run: npm test --prefix server
+
+      - name: Lint changed authentication UI
+        working-directory: client
+        run: npx eslint src/components/Turnstile.jsx src/config/turnstile.js src/users/LoginModal.jsx src/users/RegisterModal.jsx
+
+      - name: Build production client
+        env:
+          VITE_TURNSTILE_SITE_KEY: 1x00000000000000000000AA
+        run: npm run build
+
+      - name: Set up Terraform
+        uses: hashicorp/setup-terraform@v4.0.1
+        with:
+          terraform_version: 1.16.0
+
+      - name: Check infrastructure formatting
+        run: terraform -chdir=deployment fmt -check
