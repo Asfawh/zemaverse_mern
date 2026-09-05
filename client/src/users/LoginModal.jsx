@@ -1,4 +1,5 @@
 /* react */
+/* eslint-disable react/prop-types */
 import { useState } from 'react';
 
 /* react bootstrap */
@@ -8,6 +9,12 @@ import Modal from 'react-bootstrap/Modal';
 
 /* local */
 import useLoginReg from './hooks/useLoginReg';
+import Turnstile from '../components/Turnstile';
+import {
+  turnstileConfigurationError,
+  turnstileEnabled,
+  turnstileSiteKey,
+} from '../config/turnstile';
 
 /* variables */
 const initialFormState = {
@@ -18,6 +25,8 @@ const initialFormState = {
 function LoginModal({ showLogin, handleClose }) {
   const [formState, setFormState] = useState(initialFormState);
   const [validated, setValidated] = useState(false);
+  const [turnstileToken, setTurnstileToken] = useState('');
+  const [turnstileResetSignal, setTurnstileResetSignal] = useState(0);
   const { loginReg, errors, generalError, isLoading } = useLoginReg();
 
   const handleChange = (e) => {
@@ -28,6 +37,7 @@ function LoginModal({ showLogin, handleClose }) {
   const handleCancel = () => {
     setFormState(initialFormState);
     setValidated(false);
+    setTurnstileToken('');
     handleClose('login');
   };
 
@@ -42,17 +52,20 @@ function LoginModal({ showLogin, handleClose }) {
 
     setValidated(true);
     try {
-      await loginReg('login', formState);
+      await loginReg('login', { ...formState, turnstileToken });
       setFormState(initialFormState);
       setValidated(false);
+      setTurnstileToken('');
       handleClose('login');
     } catch (err) {
       console.log(err);
+      setTurnstileToken('');
+      setTurnstileResetSignal((value) => value + 1);
     }
   };
 
   return (
-    <Modal show={showLogin} onHide={() => handleClose('login')}>
+    <Modal show={showLogin} onHide={handleCancel}>
       <Form noValidate validated={validated} onSubmit={handleSubmit}>
         <Modal.Header closeButton>
           <Modal.Title>Login</Modal.Title>
@@ -92,12 +105,33 @@ function LoginModal({ showLogin, handleClose }) {
               {generalError}
             </div>
           )}
+          {turnstileConfigurationError && (
+            <div className="alert alert-danger py-2" role="alert">
+              {turnstileConfigurationError}
+            </div>
+          )}
+          {showLogin && turnstileEnabled && (
+            <Turnstile
+              action="login"
+              onTokenChange={setTurnstileToken}
+              resetSignal={turnstileResetSignal}
+              siteKey={turnstileSiteKey}
+            />
+          )}
         </Modal.Body>
         <Modal.Footer>
           <Button variant="outline-primary" size="sm" onClick={handleCancel}>
             Cancel
           </Button>
-          <Button type="submit" size="sm" disabled={isLoading}>
+          <Button
+            type="submit"
+            size="sm"
+            disabled={
+              isLoading ||
+              Boolean(turnstileConfigurationError) ||
+              (turnstileEnabled && !turnstileToken)
+            }
+          >
             {isLoading ? 'Logging in…' : 'Login'}
           </Button>
         </Modal.Footer>
