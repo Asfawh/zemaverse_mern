@@ -47,10 +47,18 @@ jobs:
       - name: Install Lambda dependencies
         run: npm ci --prefix server --omit=dev
 
+      - name: Test Lambda API
+        run: npm test --prefix server
+
       - name: Validate and build
         env:
           VITE_DONATION_URL: ${{ vars.VITE_DONATION_URL }}
+          VITE_TURNSTILE_SITE_KEY: ${{ vars.VITE_TURNSTILE_SITE_KEY }}
         run: |
+          if [[ -z "$VITE_TURNSTILE_SITE_KEY" ]]; then
+            echo "VITE_TURNSTILE_SITE_KEY repository variable is required for production"
+            exit 1
+          fi
           npm run build
           node --check server/server.js
           node --check server/controllers/user-controller.js

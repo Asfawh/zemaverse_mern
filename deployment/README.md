@@ -7,7 +7,9 @@ Lambda for the Express API. MongoDB remains in Atlas. The AWS provider uses the
 
 Secrets are deliberately not represented as Terraform variables because values
 passed through Terraform would be retained in state. Configure `MONGODB_URI` and
-`JWT_SECRET` directly on the Lambda after the first apply.
+`JWT_SECRET` directly on the Lambda after the first apply. The production
+Turnstile secret follows the same rule and is stored as `TURNSTILE_SECRET_KEY`
+in the Lambda environment, never in Terraform or Git.
 
 The `.com` redirect should be added only after `zemaverse.com` is registered and
 delegated. As of 2026-07-21 the registry reports that the domain is not registered.
@@ -25,6 +27,26 @@ The workflow uses GitHub OIDC to assume the
 owner and repository IDs), and its deployment policy is limited
 to the production site bucket, Lambda function, and CloudFront distribution.
 No AWS access keys or application secrets are stored in GitHub.
+
+## Cloudflare Turnstile
+
+Registration and login require server-verified Cloudflare Turnstile tokens.
+Local development automatically uses Cloudflare's published always-pass test
+keys. To activate production verification:
+
+1. Create a free widget allowing `zemaverse.com` and `www.zemaverse.com`.
+2. Add its public site key as the GitHub Actions repository variable
+   `VITE_TURNSTILE_SITE_KEY`.
+3. Add its secret key to the existing Lambda environment as
+   `TURNSTILE_SECRET_KEY`, preserving every existing environment variable.
+4. Optionally set `TURNSTILE_HOSTNAMES` to a comma-separated allowlist. It
+   defaults to `zemaverse.com,www.zemaverse.com`.
+
+Production verification fails closed when its public or private key is absent,
+rejects mismatched widget actions or hostnames, and resets the browser widget
+after a failed login or registration attempt. Cloudflare's test keys remain
+limited to local development. The unused public `GET /api/users` route is
+removed so unauthenticated visitors cannot enumerate account records.
 
 ## CloudFront Free plan
 
