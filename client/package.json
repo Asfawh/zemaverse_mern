@@ -7,6 +7,7 @@
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint .",
+    "test:presentation": "node --test test/lyricsPresentation.test.js",
     "preview": "vite preview"
   },
   "dependencies": {
@@ -16,6 +17,7 @@
     "is-empty": "^1.2.0",
     "jsonwebtoken": "^9.0.2",
     "mongoose-unique-validator": "^4.0.1",
+    "prop-types": "^15.8.1",
     "react": "^18.3.1",
     "react-bootstrap": "^2.10.7",
     "react-dom": "^18.3.1",

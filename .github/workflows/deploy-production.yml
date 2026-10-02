@@ -51,6 +51,7 @@ jobs:
         env:
           VITE_DONATION_URL: ${{ vars.VITE_DONATION_URL }}
         run: |
+          npm run test:presentation --prefix client
           npm run build
           node --check server/server.js
           node --check server/controllers/user-controller.js
