@@ -310,6 +310,8 @@ a:hover { color: var(--wine); }
   box-shadow: 0 12px 30px rgba(77, 45, 49, 0.07);
   transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
 }
+.song-card-clickable { cursor: pointer; }
+.song-card-clickable:focus-visible { outline: 4px solid var(--gold); outline-offset: 4px; }
 .song-card:hover { transform: translateY(-5px); border-color: #d2ba8b; box-shadow: 0 22px 45px rgba(77, 45, 49, 0.13); }
 .song-card-accent { height: 6px; background: linear-gradient(90deg, var(--wine), var(--gold), var(--wine)); }
 .song-card .card-body { display: flex; flex: 1; flex-direction: column; padding: 1.55rem 1.5rem 1rem; }
@@ -687,10 +689,17 @@ a:hover { color: var(--wine); }
   font-size: clamp(1.4rem, 3vw, 2.35rem);
   line-height: 1.62;
   text-align: center;
+  user-select: none;
+  -webkit-user-select: none;
   animation: lyrics-slide-in 280ms ease-out;
 }
 .lyrics-slide-lines { display: grid; gap: clamp(0.28rem, 0.9vw, 0.7rem); }
-.lyrics-line { overflow-wrap: anywhere; text-wrap: balance; }
+.lyrics-line {
+  max-width: 100%;
+  overflow-wrap: break-word;
+  word-break: normal;
+  text-wrap: balance;
+}
 .lyrics-label {
   width: fit-content;
   margin: 0 auto 0.6rem;
@@ -1045,6 +1054,14 @@ a:hover { color: var(--wine); }
   .lyrics-nav-button { min-width: 0; min-height: 44px; padding-inline: 0.75rem; }
   .lyrics-progress { max-width: 105px; }
   .lyrics-stage-footer { align-items: center; flex-direction: column; text-align: center; }
+}
+
+@media (max-width: 900px) and (orientation: landscape) {
+  .lyrics-slide {
+    min-height: min(68vh, 430px);
+    padding: 2.5rem clamp(2rem, 8vw, 5rem);
+    font-size: clamp(1.1rem, 4vw, 1.7rem);
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

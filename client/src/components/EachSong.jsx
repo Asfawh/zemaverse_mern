@@ -1,9 +1,10 @@
 /* react */
 /* react bootstrap */
 import Card from 'react-bootstrap/Card';
+import PropTypes from 'prop-types';
 
 /* react router */
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { getDisplayedZemaVerseSource } from '../config/zemaverse';
 
 function EachSong({
@@ -12,6 +13,7 @@ function EachSong({
   onReaction = null,
   reactionBusy = false,
 }) {
+  const navigate = useNavigate();
   const displayedSource = getDisplayedZemaVerseSource(song);
   const counts = song.reactionCounts || { like: 0, love: 0 };
   const canReact = Boolean(user && onReaction);
@@ -24,8 +26,28 @@ function EachSong({
   const previewLines = verseLines?.slice(0, 4) || [];
   const hasMoreLyrics = (verseLines?.length || 0) > previewLines.length;
 
+  const openLyrics = () => navigate(`/songs/${song._id}`);
+  const handleCardClick = (event) => {
+    if (event.target.closest('button, a, input, textarea, select')) return;
+    openLyrics();
+  };
+  const handleCardKeyDown = (event) => {
+    if (event.target.closest('button, a, input, textarea, select')) return;
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault();
+      openLyrics();
+    }
+  };
+
   return (
-    <Card className="song-card">
+    <Card
+      className="song-card song-card-clickable"
+      role="link"
+      tabIndex={0}
+      aria-label={`Open lyrics for ${song.songName}`}
+      onClick={handleCardClick}
+      onKeyDown={handleCardKeyDown}
+    >
       <div className="song-card-accent" aria-hidden="true"></div>
       <Card.Body>
         <div className="song-card-topline">
@@ -92,5 +114,12 @@ function EachSong({
     </Card>
   );
 }
+
+EachSong.propTypes = {
+  song: PropTypes.object.isRequired,
+  user: PropTypes.object,
+  onReaction: PropTypes.func,
+  reactionBusy: PropTypes.bool,
+};
 
 export default EachSong;
