@@ -1,12 +1,169 @@
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
+import PropTypes from 'prop-types';
 import { Link, useParams } from 'react-router-dom';
 import SONG_SERVICE from '../services/song.service';
 import { getDisplayedZemaVerseSource } from '../config/zemaverse';
 import { AuthContext } from '../context/AuthContext';
+import {
+  buildLyricsSlides,
+  isLyricsHeading,
+} from '../utils/lyricsPresentation';
 
-const isLyricsHeading = (line) => (
-  /^(chorus|refrain|verse|meaning|translation)\b[\s.:…-]*/i.test(line.trim())
-);
+function LyricsPresentation({ enableGlobalKeys, songName, version, versionIndex }) {
+  const [activeSlide, setActiveSlide] = useState(0);
+  const [isFullscreen, setIsFullscreen] = useState(false);
+  const stageRef = useRef(null);
+  const lyricsSlides = buildLyricsSlides(version.text, songName);
+  const slideCount = lyricsSlides.length;
+  const currentLyrics = lyricsSlides[activeSlide] || [];
+  const progress = slideCount > 0 ? ((activeSlide + 1) / slideCount) * 100 : 0;
+  const headingId = `lyrics-heading-${versionIndex}`;
+
+  useEffect(() => {
+    setActiveSlide(0);
+  }, [songName, version.text]);
+
+  useEffect(() => {
+    const handleFullscreenChange = () => {
+      setIsFullscreen(document.fullscreenElement === stageRef.current);
+    };
+
+    document.addEventListener('fullscreenchange', handleFullscreenChange);
+    return () => document.removeEventListener('fullscreenchange', handleFullscreenChange);
+  }, []);
+
+  useEffect(() => {
+    const handleKeyboardNavigation = (event) => {
+      if (event.target instanceof HTMLElement && event.target.closest('input, textarea, select')) {
+        return;
+      }
+
+      const ownsKeyboard =
+        enableGlobalKeys ||
+        document.fullscreenElement === stageRef.current ||
+        stageRef.current?.contains(document.activeElement);
+
+      if (!ownsKeyboard) return;
+
+      if (event.key === 'ArrowLeft') {
+        setActiveSlide((current) => Math.max(0, current - 1));
+      }
+
+      if (event.key === 'ArrowRight') {
+        setActiveSlide((current) => Math.min(Math.max(0, slideCount - 1), current + 1));
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyboardNavigation);
+    return () => window.removeEventListener('keydown', handleKeyboardNavigation);
+  }, [enableGlobalKeys, slideCount]);
+
+  const toggleFullscreen = async () => {
+    if (!stageRef.current || !document.fullscreenEnabled) return;
+
+    if (document.fullscreenElement === stageRef.current) {
+      await document.exitFullscreen();
+    } else {
+      await stageRef.current.requestFullscreen();
+    }
+  };
+
+  return (
+    <section
+      className="lyrics-stage"
+      aria-labelledby={headingId}
+      lang={version.languageCode}
+      ref={stageRef}
+    >
+      <div className="lyrics-stage-toolbar">
+        <div>
+          <span className="lyrics-stage-kicker">Sing-along view</span>
+          <h2 id={headingId}>{version.language} lyrics</h2>
+        </div>
+        {document.fullscreenEnabled && (
+          <button
+            type="button"
+            className="lyrics-fullscreen"
+            onClick={toggleFullscreen}
+            aria-label={isFullscreen ? 'Exit full screen' : 'Open full screen'}
+          >
+            <span aria-hidden="true">{isFullscreen ? '✕' : '⛶'}</span>
+            {isFullscreen ? 'Exit' : 'Full screen'}
+          </button>
+        )}
+      </div>
+
+      <div className="lyrics-slide" aria-live="polite" key={activeSlide}>
+        <span className="lyrics-slide-ornament" aria-hidden="true">✥</span>
+        {currentLyrics.length > 0 ? (
+          <div className="lyrics-slide-lines">
+            {currentLyrics.map((line, index) => (
+              <div
+                className={isLyricsHeading(line) ? 'lyrics-line lyrics-label' : 'lyrics-line'}
+                key={`${line}-${index}`}
+              >
+                {line}
+              </div>
+            ))}
+          </div>
+        ) : (
+          <p className="lyrics-empty">Lyrics have not been added yet.</p>
+        )}
+        <span className="lyrics-slide-ornament lyrics-slide-ornament-bottom" aria-hidden="true">✥</span>
+      </div>
+
+      {slideCount > 0 && (
+        <div className="lyrics-navigation">
+          <button
+            type="button"
+            className="lyrics-nav-button"
+            onClick={() => setActiveSlide((current) => Math.max(0, current - 1))}
+            disabled={activeSlide === 0}
+          >
+            <span aria-hidden="true">←</span>
+            Previous
+          </button>
+
+          <div className="lyrics-progress" aria-label={`Part ${activeSlide + 1} of ${slideCount}`}>
+            <div className="lyrics-progress-label">
+              <span>Part {activeSlide + 1}</span>
+              <span>{slideCount}</span>
+            </div>
+            <div className="lyrics-progress-track" aria-hidden="true">
+              <span style={{ width: `${progress}%` }} />
+            </div>
+          </div>
+
+          <button
+            type="button"
+            className="lyrics-nav-button lyrics-nav-button-next"
+            onClick={() => setActiveSlide((current) => Math.min(slideCount - 1, current + 1))}
+            disabled={activeSlide === slideCount - 1}
+          >
+            Next
+            <span aria-hidden="true">→</span>
+          </button>
+        </div>
+      )}
+
+      <div className="lyrics-stage-footer">
+        <span>Use the ← and → arrow keys to move between parts</span>
+        <Link to="/songs">Explore more songs</Link>
+      </div>
+    </section>
+  );
+}
+
+LyricsPresentation.propTypes = {
+  enableGlobalKeys: PropTypes.bool.isRequired,
+  songName: PropTypes.string.isRequired,
+  version: PropTypes.shape({
+    language: PropTypes.string,
+    languageCode: PropTypes.string,
+    text: PropTypes.string,
+  }).isRequired,
+  versionIndex: PropTypes.number.isRequired,
+};
 
 function Details() {
   const { id } = useParams();
@@ -59,7 +216,6 @@ function Details() {
           {song.duration && <span>{song.duration}</span>}
           {song.genre && <span>{song.genre}</span>}
           {song.pageNumber && <span>ZM#{song.pageNumber}</span>}
-          {displayedSource && <span>Source: {displayedSource}</span>}
         </div>
         {state.user?.username === 'cho' && (
           <Link to={`/songs/${song._id}/edit`} className="lyrics-edit-link">
@@ -68,41 +224,20 @@ function Details() {
         )}
       </header>
 
-      {versions.map((version, versionIndex) => {
-        const lines = version.text.replace(/\r\n?/g, '\n').trim().split('\n');
-        return <section className="lyrics-sheet" aria-labelledby={`lyrics-heading-${versionIndex}`}
-          key={`${version.languageCode}-${versionIndex}`} lang={version.languageCode}>
-        <div className="lyrics-sheet-heading">
-          <span className="lyrics-ornament" aria-hidden="true">✥</span>
-          <h2 id={`lyrics-heading-${versionIndex}`}>{version.language} lyrics</h2>
-          <span className="lyrics-ornament" aria-hidden="true">✥</span>
-        </div>
+      {versions.map((version, versionIndex) => (
+        <LyricsPresentation
+          enableGlobalKeys={versions.length === 1}
+          key={`${version.languageCode}-${versionIndex}`}
+          songName={song.songName}
+          version={version}
+          versionIndex={versionIndex}
+        />
+      ))}
 
-        <div className="lyrics-body">
-          {lines.length > 0 ? lines.map((line, index) => {
-            if (!line.trim()) {
-              return <div className="lyrics-stanza-break" aria-hidden="true" key={`break-${index}`} />;
-            }
+      {displayedSource && (
+        <p className="lyrics-attribution">Source: {displayedSource}</p>
+      )}
 
-            return (
-              <div
-                className={isLyricsHeading(line) ? 'lyrics-line lyrics-label' : 'lyrics-line'}
-                key={`${line}-${index}`}
-              >
-                {line.trim()}
-              </div>
-            );
-          }) : (
-            <p className="lyrics-empty">Lyrics have not been added yet.</p>
-          )}
-        </div>
-
-        <footer className="lyrics-sheet-footer">
-          <span>{song.songName}</span>
-          <Link to="/songs">Explore more songs</Link>
-        </footer>
-      </section>;
-      })}
       {song.externalOnly && song.externalSourceUrl && (
         <aside className="external-lyrics-notice">
           <strong>Lyrics awaiting authorization</strong>
