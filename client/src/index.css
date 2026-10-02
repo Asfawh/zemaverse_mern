@@ -679,7 +679,10 @@ a:hover { color: var(--wine); }
   position: relative;
   z-index: 1;
   display: grid;
+  min-width: 0;
   width: min(100%, 960px);
+  box-sizing: border-box;
+  grid-template-columns: minmax(0, 1fr);
   min-height: clamp(430px, 52vw, 610px);
   margin: 0 auto;
   place-content: center;
@@ -693,11 +696,19 @@ a:hover { color: var(--wine); }
   -webkit-user-select: none;
   animation: lyrics-slide-in 280ms ease-out;
 }
-.lyrics-slide-lines { display: grid; gap: clamp(0.28rem, 0.9vw, 0.7rem); }
+.lyrics-slide-lines {
+  display: grid;
+  min-width: 0;
+  width: 100%;
+  gap: clamp(0.28rem, 0.9vw, 0.7rem);
+}
 .lyrics-line {
+  min-width: 0;
+  width: 100%;
   max-width: 100%;
-  overflow-wrap: break-word;
+  overflow-wrap: anywhere;
   word-break: normal;
+  white-space: pre-wrap;
   text-wrap: balance;
 }
 .lyrics-label {
@@ -1056,11 +1067,44 @@ a:hover { color: var(--wine); }
   .lyrics-stage-footer { align-items: center; flex-direction: column; text-align: center; }
 }
 
-@media (max-width: 900px) and (orientation: landscape) {
+@media (orientation: landscape) and (max-height: 500px) {
   .lyrics-slide {
-    min-height: min(68vh, 430px);
-    padding: 2.5rem clamp(2rem, 8vw, 5rem);
-    font-size: clamp(1.1rem, 4vw, 1.7rem);
+    min-height: min(72vh, 360px);
+    padding: 2rem clamp(1.25rem, 5vw, 3.5rem);
+    font-size: clamp(1rem, 3vw, 1.45rem);
+    line-height: 1.42;
+  }
+  .lyrics-slide-lines { gap: clamp(0.18rem, 0.7vh, 0.4rem); }
+  .lyrics-slide-ornament { top: 0.75rem; }
+  .lyrics-slide-ornament-bottom { top: auto; bottom: 0.75rem; }
+  .lyrics-stage:fullscreen {
+    overflow-y: auto;
+    grid-template-rows: auto minmax(0, 1fr) auto;
+  }
+  .lyrics-stage:fullscreen .lyrics-stage-toolbar { padding-block: 0.5rem; }
+  .lyrics-stage:fullscreen .lyrics-stage-kicker,
+  .lyrics-stage:fullscreen .lyrics-stage-footer { display: none; }
+  .lyrics-stage:fullscreen .lyrics-stage-toolbar h2 {
+    margin: 0;
+    font-size: 1rem;
+  }
+  .lyrics-stage:fullscreen .lyrics-fullscreen {
+    min-height: 34px;
+    padding-block: 0.35rem;
+  }
+  .lyrics-stage:fullscreen .lyrics-slide {
+    min-height: 0;
+    padding-block: 1.6rem;
+    overflow-y: auto;
+    font-size: clamp(0.95rem, 3vw, 1.35rem);
+    line-height: 1.34;
+  }
+  .lyrics-stage:fullscreen .lyrics-navigation {
+    padding-block: 0.5rem;
+  }
+  .lyrics-stage:fullscreen .lyrics-nav-button {
+    min-height: 36px;
+    padding-block: 0.45rem;
   }
 }
 
