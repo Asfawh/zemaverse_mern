@@ -3,7 +3,7 @@ import { useContext, useState } from 'react';
 
 /* react bootstrap */
 import Container from 'react-bootstrap/Container';
-// import Search from './Search';
+import Search from './Search';
 
 /* local */
 import { AuthContext } from '../context/AuthContext';
@@ -59,11 +59,14 @@ function AccountBar() {
           <span className="account-welcome">
             {username ? `Welcome back, ${username}` : 'Join the community to add and manage ZemaVerse'}
           </span>
-          <AccountModal
-            title={`${username ? username : 'Login or Register'}`}
-            options={options}
-            handleSelect={handleSelect}
-          />
+          <div className="account-actions">
+            <Search />
+            <AccountModal
+              title={`${username ? username : 'Login or Register'}`}
+              options={options}
+              handleSelect={handleSelect}
+            />
+          </div>
         </div>
       </Container>
 

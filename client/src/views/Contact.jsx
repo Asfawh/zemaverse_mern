@@ -29,6 +29,17 @@ function Contact() {
               <p>{text}</p>
             </article>
           ))}
+          <article className="contact-reason contact-batch-card">
+            <span className="eyebrow">Shared contribution folder</span>
+            <h2>Have a batch of Ethiopian song files?</h2>
+            <p>Send recordings, authorized lyric documents, album notes, images, or a shared-folder link and we can prepare them for the library.</p>
+            <ol>
+              <li>Put the files in one folder or attach a small batch.</li>
+              <li>Include each song title, artist, language, album, genre, and source when known.</li>
+              <li>Tell us whether you have permission to share any lyrics or images.</li>
+            </ol>
+            <a className="trust-action" href="mailto:chosky05@gmail.com?subject=ZemaVerse%20batch%20contribution&body=Folder%20link%3A%0A%0AWhat%20is%20included%3A%0A%0ASource%20or%20permission%20details%3A%0A">Send a batch contribution</a>
+          </article>
         </div>
         <aside className="contact-card">
           <span className="eyebrow">Email</span>

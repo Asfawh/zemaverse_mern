@@ -44,3 +44,24 @@ test('folds a standalone repeated title into the opening lyric stanza', () => {
     [['ፈራሁ', 'መስመር አንድ', 'መስመር ሁለት']],
   );
 });
+
+test('keeps a standalone chorus marker with the stanza above it', () => {
+  assert.deepEqual(
+    buildLyricsSlides('Line one\nLine two\nChorus\nLine three\nLine four'),
+    [['Line one', 'Line two', 'Chorus'], ['Line three', 'Line four']],
+  );
+});
+
+test('groups isolated one-line lyric fragments into readable slides', () => {
+  assert.deepEqual(
+    buildLyricsSlides('One\n\nTwo\n\nThree\n\nFour'),
+    [['One', 'Two', 'Three', 'Four']],
+  );
+});
+
+test('splits long inline lyrics at sentence boundaries', () => {
+  assert.deepEqual(
+    buildLyricsSlides('First sentence. Second sentence. Third sentence.'),
+    [['First sentence.', 'Second sentence.', 'Third sentence.']],
+  );
+});

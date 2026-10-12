@@ -108,7 +108,7 @@ function EachSong({
       </Card.Body>
       <Card.Footer>
         <Link to={`/songs/${song._id}`} className="song-link">
-          Read lyrics <span aria-hidden="true">→</span>
+          View lyrics <span aria-hidden="true">→</span>
         </Link>
       </Card.Footer>
     </Card>

@@ -191,6 +191,11 @@ function MainList() {
   const [busySongId, setBusySongId] = useState(null);
   const [selectedArtist, setSelectedArtist] = useState(null);
   const [searchParams, setSearchParams] = useSearchParams();
+  const sharedIds = useMemo(() => [...new Set((searchParams.get('playlist') || '')
+    .split(',').filter((id) => /^[a-f0-9]{24}$/i.test(id)))].slice(0, 30), [searchParams]);
+  const [selectedIds, setSelectedIds] = useState(sharedIds);
+  const [shareStatus, setShareStatus] = useState('');
+  const [shareUrl, setShareUrl] = useState('');
   const [searchValue, setSearchValue] = useState(searchParams.get('query') || '');
   const {
     state: { user },
@@ -220,23 +225,22 @@ function MainList() {
 
   const query = searchParams.get('query')?.trim().toLowerCase() || '';
   const visibleSongs = useMemo(() => songs.filter((song) => {
+    if (searchParams.has('playlist') && !sharedIds.includes(song._id)) return false;
     if (!query) return true;
     return [
       song.songName,
       song.artistName,
       song.genre,
       getDisplayedZemaVerseSource(song),
-      song.verses,
       ...(song.lyrics || []).flatMap((version) => [
         version.language,
         version.languageCode,
         version.title,
-        version.text,
       ]),
     ]
       .filter(Boolean)
       .some((value) => value.toLowerCase().includes(query));
-  }), [songs, query]);
+  }), [songs, query, searchParams, sharedIds]);
 
   const selectedArtistSongs = useMemo(() => {
     if (!selectedArtist) return [];
@@ -260,12 +264,50 @@ function MainList() {
   const handleSearch = (event) => {
     event.preventDefault();
     const value = searchValue.trim();
-    setSearchParams(value ? { query: value } : {});
+    const next = new URLSearchParams(searchParams);
+    if (value) next.set('query', value); else next.delete('query');
+    setSearchParams(next);
   };
 
   const clearSearch = () => {
     setSearchValue('');
-    setSearchParams({});
+    const next = new URLSearchParams(searchParams);
+    next.delete('query');
+    setSearchParams(next);
+  };
+
+  const toggleSelection = (id) => {
+    setShareUrl('');
+    setShareStatus('');
+    setSelectedIds((current) => current.includes(id)
+      ? current.filter((item) => item !== id)
+      : current.length < 30 ? [...current, id] : current);
+  };
+
+  const playlistUrl = new URL('/songs', window.location.origin);
+  playlistUrl.searchParams.set('playlist', selectedIds.join(','));
+  const playlistMessage = `${selectedIds.length} Ethiopian songs in this ZemaVerse playlist: ${playlistUrl.href}`;
+
+  const shareSelection = async () => {
+    const url = new URL('/songs', window.location.origin);
+    url.searchParams.set('playlist', selectedIds.join(','));
+    setShareUrl(url.href);
+    setShareStatus('');
+    if (navigator.share) {
+      try {
+        await navigator.share({ title: 'ZemaVerse playlist', text: `${selectedIds.length} Ethiopian songs`, url: url.href });
+        setShareStatus('Playlist shared.');
+        return;
+      } catch (error) {
+        if (error.name === 'AbortError') return;
+      }
+    }
+    try {
+      await navigator.clipboard.writeText(url.href);
+      setShareStatus('Playlist link copied.');
+    } catch {
+      setShareStatus('Select and copy the playlist link below.');
+    }
   };
 
   const handleReaction = async (song, kind) => {
@@ -449,6 +491,30 @@ function MainList() {
           </p>
         )}
 
+        <div className={styles.studyPanel}>
+          <div>
+            <strong>{searchParams.has('playlist') ? 'Shared ZemaVerse playlist' : 'Build a listening list'}</strong>
+            <p>Select up to 30 songs, then share one link by text, email, or another app. No sign-in is needed.</p>
+          </div>
+          {searchParams.has('playlist') && <Link to="/songs">Browse all songs</Link>}
+          {isLoaded && sharedIds.some((id) => !songs.some((song) => song._id === id)) && (
+            <p role="status">Some songs in this shared list are no longer available.</p>
+          )}
+          <div className={styles.studyActions}>
+            <span>{selectedIds.length} selected</span>
+            <button type="button" disabled={!selectedIds.length} onClick={shareSelection}>Share playlist</button>
+            {selectedIds.length > 0 && <>
+              <a href={`sms:?body=${encodeURIComponent(playlistMessage)}`}>Text message</a>
+              <a href={`mailto:?subject=${encodeURIComponent('ZemaVerse playlist')}&body=${encodeURIComponent(playlistMessage)}`}>Email</a>
+            </>}
+            <button type="button" disabled={!selectedIds.length} onClick={() => {
+              setSelectedIds([]); setShareUrl(''); setShareStatus('');
+            }}>Clear selection</button>
+          </div>
+          {shareUrl && <label>Playlist link<input aria-label="Playlist link" readOnly value={shareUrl} onFocus={(event) => event.target.select()} /></label>}
+          <span role="status">{shareStatus}</span>
+        </div>
+
         {reactionError && <div className="alert alert-danger">{reactionError}</div>}
         {!isLoaded && <div className="empty-state">Loading the song library…</div>}
         {loadError && <div className="alert alert-danger">{loadError}</div>}
@@ -460,13 +526,16 @@ function MainList() {
         )}
         <div className={styles.grid}>
           {visibleSongs.map((song) => (
-            <EachSong
-              key={song._id}
-              song={song}
-              user={user}
-              onReaction={handleReaction}
-              reactionBusy={Boolean(busySongId)}
-            />
+            <div key={song._id} className={styles.selectableSong}>
+              <label className={styles.songSelect}>
+                <input type="checkbox" checked={selectedIds.includes(song._id)}
+                  disabled={selectedIds.length >= 30 && !selectedIds.includes(song._id)}
+                  onChange={() => toggleSelection(song._id)} />
+                Select {song.songName}
+              </label>
+              <EachSong song={song} user={user} onReaction={handleReaction}
+                reactionBusy={Boolean(busySongId)} />
+            </div>
           ))}
         </div>
       </section>
